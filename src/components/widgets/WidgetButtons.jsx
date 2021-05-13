@@ -28,6 +28,7 @@ class WidgetButtons extends React.Component {
       triggerAction
     } = this.props;
     const { name, widgetConfig } = widget;
+    widget.widgetConfig.data[0].url = widget.widgetConfig.data[0].url.replace('SELECT', `SELECT '${filters.scope}' AS geography, '${filters.crop}' AS crop, '${filters.period_value}' AS timeframe, 'hectares' AS unit,`)
     logEvent(`[AQ-Food] Widget - ${name}`, 'select widget download format', format);
     if (['json', 'csv'].includes(format)) {
       if (widgetConfig && widgetConfig.data && Array.isArray(widgetConfig.data)) {
