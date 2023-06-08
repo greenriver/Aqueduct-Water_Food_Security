@@ -26,7 +26,7 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime-corejs3": "^7.4.5",
-    "aqueduct-components": "^0.3.16",
+    "aqueduct-components": "^0.3.17",
     "autoprefixer": "^9.6.0",
     "axios": "^0.18.0",
     "babel-core": "^7.0.0-bridge.0",
@@ -36,7 +36,7 @@
     "body-parser": "^1.15.2",
     "camelcase": "^4.1.0",
     "camelcase-keys": "^6.0.0",
-    "canvas": "^1.6.2",
+    "canvas": "^2.11.2",
     "chai": "^3.5.0",
     "classnames": "^2.2.5",
     "clipboard": "^1.5.16",
@@ -117,8 +117,7 @@
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0",
-    "mocha": "^3.0.0"
+    "eslint-plugin-react": "^7.13.0"
   },
   "engines": {
     "node": "10.20.1"
