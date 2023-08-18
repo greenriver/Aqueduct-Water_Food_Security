@@ -10,13 +10,13 @@ export default class NewUpdatesModal extends PureComponent {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem('updateModal')) {
+    if (!localStorage.getItem('updateModalFood')) {
       this.setState({ show: true });
     }
   }
 
   closeUpdatesModal() {
-    localStorage.setItem('updateModal', 'true');
+    localStorage.setItem('updateModalFood', 'true');
     this.setState({ show: false });
   }
 
@@ -24,6 +24,9 @@ export default class NewUpdatesModal extends PureComponent {
     const { show } = this.state;
     return show ? (
       <div className="updates-modal">
+        <header>
+          <button type="button" onClick={() => this.closeUpdatesModal()}>X</button>
+        </header>
         <p>Aqueduct Food data does not yet use the Aqueduct 4.0 methodology and is
           not comparable to the Water Risk Atlas and Country Rankings. We will
           update it soon. Thank you for your patience. For more information, please click &nbsp;
