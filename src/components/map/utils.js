@@ -16,7 +16,6 @@ export const parseMetadataLayer = (layer = {}) => {
     });
   }
 
-  console.log(layer)
   return layer;
 };
 
