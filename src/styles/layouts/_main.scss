@@ -109,3 +109,41 @@
     text-decoration: underline;
   }
 }
+
+.updates-modal {
+  position: absolute;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+  background-color: palette(gray, primary);
+  opacity: 0.9;
+  
+  padding: 1.5rem;
+  color: white;
+  p {
+    font-size: small;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  header {
+    display: flex;
+    justify-content: end;
+  }
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+  .button-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    font-size: small;
+    margin: auto;
+    width: 100%;
+  }
+}

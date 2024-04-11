@@ -50,3 +50,6 @@ To deploy to production, follow the same steps as above but use the `aqueduct-gr
 - [Aqueduct Food](https://www.wri.org/applications/aqueduct/food/#/) - https://github.com/greenriver/aqueduct-food
 - [Aqueduct Floods](https://www.wri.org/applications/aqueduct/floods/) - https://github.com/greenriver/aqueduct-flood
 - [Aqueduct Components](https://greenriver.github.io/aqueduct-components/) - https://github.com/greenriver/aqueduct-components
+
+
+cp -a dist/. ../wriflagship/web/applications/aqueduct/food/
