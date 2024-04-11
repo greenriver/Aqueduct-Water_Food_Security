@@ -11,7 +11,7 @@ export const MAP_OPTIONS = {
 };
 
 export const BASEMAP_LAYER_CONFIG = {
-  url: `https://api.mapbox.com/styles/v1/resourcewatch/cjtr6fhr3060g1fok829tfwm7/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_API_TOKEN}`,
+  url: 'https://api.mapbox.com/styles/v1/resourcewatch/cjtr6fhr3060g1fok829tfwm7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
   options: { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>' }
 };
 
@@ -19,7 +19,7 @@ export const BASEMAPS = {
   // Open Street Maps
   osm: {
     id: 'osm',
-    value: 'https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid3JpIiwiYSI6IjU3NWNiNGI4Njc4ODk4MmIyODFkYmJmM2NhNDgxMWJjIn0.v1tciCeBElMdpnrikGDrPg',
+    value: 'https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
     label: 'Light',
     options: { attribution: '<a href="https://www.mapbox.com/about/maps/" target="_blank" rel="noopener noreferrer">© Mapbox</a>' }
   },
@@ -31,20 +31,20 @@ export const BASEMAPS = {
   },
   terrain: {
     id: 'terrain',
-    value: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqi456h02pg2rp6w2mwp61c/tiles/256/{z}/{x}/{y}?access_token=${process.env.REACT_APP_MAPBOX_API_TOKEN}`,
+    value: 'https://api.mapbox.com/styles/v1/resourcewatch/cjhqi456h02pg2rp6w2mwp61c/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
     label: 'Terrain',
     options: { attribution: '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a>' }
   },
   hydro: {
     id: 'hydro',
-    value: `https://api.mapbox.com/styles/v1/resourcewatch/cjtr6fhr3060g1fok829tfwm7/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_API_TOKEN}`,
+    value: 'https://api.mapbox.com/styles/v1/resourcewatch/cjtr6fhr3060g1fok829tfwm7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
     label: 'Hydrography',
     options: { attribution: '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a>' }
   }
 };
 
 export const LABEL_LAYER_CONFIG = {
-  url: `https://api.mapbox.com/styles/v1/resourcewatch/ckae642b911g51ip324e0c4pr/tiles/256/%7Bz%7D/%7Bx%7D/%7By%7D@2x?access_token=${process.env.REACT_APP_MAPBOX_API_TOKEN}`,
+  url: 'https://api.mapbox.com/styles/v1/resourcewatch/ckae642b911g51ip324e0c4pr/tiles/256/%7Bz%7D/%7Bx%7D/%7By%7D@2x?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
   options: { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>' }
 };
 
