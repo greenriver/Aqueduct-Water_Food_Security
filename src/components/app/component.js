@@ -6,7 +6,6 @@ import Toastr from 'react-redux-toastr';
 // components
 import Modal from 'components/modal';
 import Tooltip from 'components/tooltip';
-import UserReport from 'components/user-report';
 import { Icons } from 'vizzuality-components';
 
 class App extends PureComponent {
@@ -42,8 +41,6 @@ class App extends PureComponent {
           transitionIn="fadeIn"
           transitionOut="fadeOut"
         />
-
-        <UserReport {...this.props} />
       </div>
     );
   }
