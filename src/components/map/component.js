@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import compact from 'lodash/compact'
-import uniq from 'lodash/uniq'
+import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
 import isEqual from 'react-fast-compare';
 import isEmpty from 'lodash/isEmpty';
 import { PluginLeaflet } from 'layer-manager/dist/layer-manager';
@@ -38,6 +38,7 @@ import { parseMetadataLayer } from './utils';
 
 // constants
 import { LABEL_LAYER_CONFIG } from './constants';
+
 class Map extends PureComponent {
   constructor(props) {
     super(props);
@@ -214,42 +215,41 @@ class Map extends PureComponent {
               >
                 {
                   layers
-                  .reduce((acc, layer) => {
-                    if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && layer.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
+                    .reduce((acc, layer) => {
+                      if (filters.scope === 'supply_chain' && filters.subscope === 'analyzer' && layer.id === 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd') {
                       // TODO: 1. Finalize microservice
                       // TODO: 2. Once finalized, add this layer spec to the API
                       // TODO: 3. Once layer is added, move this logic to the getActiveLayers selector
 
-                      // console.log({ resultRanges, locations, filters })
+                        // console.log({ resultRanges, locations, filters })
 
-                      const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations
+                        const filteredLocations = mapView === 'priority' ? locations.filter(l => l.pcr > 0) : locations;
 
-                      // TODO: Clean up the duplication here
-                      const aidData = uniq(compact(filteredLocations.map(d => parseFloat(d.aid).toFixed(0))))
-                      const widData = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))))
-                      const step = 500
+                        // TODO: Clean up the duplication here
+                        const aidData = uniq(compact(filteredLocations.map(d => parseFloat(d.aid).toFixed(0))));
+                        const widData = uniq(compact(filteredLocations.map(d => parseFloat(d.wid).toFixed(0))));
+                        const step = 500;
 
-                      const widResultRanges = !isEmpty(locations) ? (
-                        (
-                          Array(Math.ceil(widData.length / step)).fill()
-                          .map((_n, i) => widData.filter((_d, j) => j >= i * step && j < (i +1) * step))
-                        )
-                        .filter(range => !isEmpty(range))
-                      ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
-                      const aidResultRanges = !isEmpty(locations) ? (
-                        (
-                          Array(Math.ceil(aidData.length / step)).fill()
-                          .map((_n, i) => aidData.filter((_d, j) => j >= i * step && j < (i +1) * step))
-                        )
-                        .filter(range => !isEmpty(range))
-                      ) : [['null']] // This will return nothing, but will make the loading indicator go away :)
+                        const widResultRanges = !isEmpty(locations) ? (
+                          (
+                            Array(Math.ceil(widData.length / step)).fill()
+                              .map((_n, i) => widData.filter((_d, j) => j >= i * step && j < (i + 1) * step))
+                          )
+                            .filter(range => !isEmpty(range))
+                        ) : [['null']]; // This will return nothing, but will make the loading indicator go away :)
+                        const aidResultRanges = !isEmpty(locations) ? (
+                          (
+                            Array(Math.ceil(aidData.length / step)).fill()
+                              .map((_n, i) => aidData.filter((_d, j) => j >= i * step && j < (i + 1) * step))
+                          )
+                            .filter(range => !isEmpty(range))
+                        ) : [['null']]; // This will return nothing, but will make the loading indicator go away :)
 
-                      return [
-                        ...acc,
-                        ...widResultRanges.map((range, index) => {
-                          return {
+                        return [
+                          ...acc,
+                          ...widResultRanges.map((range, index) => ({
                             ...layer,
-                            id: layer.id + 'wid' + index.toString(),
+                            id: `${layer.id}wid${index.toString()}`,
                             layerConfig: {
                               ...layer.layerConfig,
                               body: {
@@ -259,7 +259,7 @@ class Map extends PureComponent {
                                     ...layer.layerConfig.body.layers[0],
                                     options: {
                                       ...layer.layerConfig.body.layers[0].options,
-                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id`
+                                      sql: 'SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},\'\'), \'No Data\') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = \'Insignificant Trend\' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != \'-9999\' and r.aqid != -9999 and s.pfaf_id in {{watershed_ids}} ORDER BY s.aq30_id'
                                     }
                                   }
                                 ]
@@ -274,12 +274,10 @@ class Map extends PureComponent {
                               ...layer.params,
                               watershed_ids: `(${range.join(',')})`
                             }
-                          }
-                        }),
-                        ...aidResultRanges.map((range, index) => {
-                          return {
+                          })),
+                          ...aidResultRanges.map((range, index) => ({
                             ...layer,
-                            id: layer.id + 'aid' +  index.toString(),
+                            id: `${layer.id}aid${index.toString()}`,
                             layerConfig: {
                               ...layer.layerConfig,
                               body: {
@@ -289,7 +287,7 @@ class Map extends PureComponent {
                                     ...layer.layerConfig.body.layers[0],
                                     options: {
                                       ...layer.layerConfig.body.layers[0].options,
-                                      sql: `SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},''), 'No Data') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = 'Insignificant Trend' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999' and r.aqid != -9999 and s.aq30_id in {{aquifer_ids}} ORDER BY s.aq30_id`
+                                      sql: 'SELECT s.aq30_id as cartodb_id, coalesce(NULLIF({{label}},\'\'), \'No Data\') as label, r.the_geom, r.the_geom_webmercator, (CASE WHEN {{label}} = \'Insignificant Trend\' THEN -1 ELSE coalesce({{indicator}}, -9999)END) as water_risk FROM water_risk_indicators_annual s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != \'-9999\' and r.aqid != -9999 and s.aq30_id in {{aquifer_ids}} ORDER BY s.aq30_id'
                                     }
                                   }
                                 ]
@@ -304,33 +302,32 @@ class Map extends PureComponent {
                               ...layer.params,
                               aquifer_ids: `(${range.join(',')})`
                             }
-                          }
-                        })
-                      ]
-                    }
-                    return [...acc, layer]
-                  }, [])
-                  .map((layer, i) => {
+                          }))
+                        ];
+                      }
+                      return [...acc, layer];
+                    }, [])
+                    .map((layer, i) => {
                     // TODO: Revert to compact structure once the work above is done
                     // console.log({ mapView, layer })
-                    let l = { ...layer }
-                    return (
-                      <Layer
-                        {...l}
-                        key={l.id}
-                        opacity={l.opacity}
-                        zIndex={1000 - i}
-                        {...l.params && { params: l.params }}
-                        {...l.sqlParams && { sqlParams: l.sqlParams }}
-                        {...l.decodeParams && { decodeParams: l.decodeParams }}
-                        {...l.interactionConfig && {
-                          interactivity: ['carto', 'cartodb'].includes(l.provider)
-                            ? (l.interactionConfig.output || []).map(o => o.column)
-                            : true
-                        }}
-                      />
-                    )
-                  })
+                      const l = { ...layer };
+                      return (
+                        <Layer
+                          {...l}
+                          key={l.id}
+                          opacity={l.opacity}
+                          zIndex={1000 - i}
+                          {...l.params && { params: l.params }}
+                          {...l.sqlParams && { sqlParams: l.sqlParams }}
+                          {...l.decodeParams && { decodeParams: l.decodeParams }}
+                          {...l.interactionConfig && {
+                            interactivity: ['carto', 'cartodb'].includes(l.provider)
+                              ? (l.interactionConfig.output || []).map(o => o.column)
+                              : true
+                          }}
+                        />
+                      );
+                    })
                 }
               </LayerManager>
 

@@ -19,7 +19,7 @@ export const BASEMAPS = {
   // Open Street Maps
   osm: {
     id: 'osm',
-    value: 'https://api.tiles.mapbox.com/v4/wri.c974eefc/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
+    value: 'https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjbHNueDl0NmgwOGg3MmttcjloYjBkZjRsIn0.VDkI_f2sQELKtwGa4FScYA',
     label: 'Light',
     options: { attribution: '<a href="https://www.mapbox.com/about/maps/" target="_blank" rel="noopener noreferrer">© Mapbox</a>' }
   },

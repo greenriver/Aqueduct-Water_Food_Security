@@ -72,7 +72,7 @@ export const getActiveLayers = createSelector(
   [getDatasets, getFilters, getWaterLayerName, getLayerParametrization],
   (_datasets, _filters = {}, _waterLayerName, _layerParametrization) => {
     const layerList = [];
-    const isWater = (_filters.indicator !== 'none') && (ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[_filters.scope] || []).includes(ID_LOOKUP[_filters.indicator])
+    const isWater = (_filters.indicator !== 'none') && (ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[_filters.scope] || []).includes(ID_LOOKUP[_filters.indicator]);
     let isMask;
     let isCrop;
     let isOneCrop;
@@ -86,25 +86,26 @@ export const getActiveLayers = createSelector(
         isOneCrop = (!isWater && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
 
         if (isWater) {
-          const indicatorKey = ID_LOOKUP[_filters.indicator]
+          const indicatorKey = ID_LOOKUP[_filters.indicator];
+
           if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[_filters.scope] || []).includes(indicatorKey)) return;
 
           const family = _filters.scope === 'supply_chain' ? 'baseline-threshold' : (_filters.year === 'baseline' ? 'baseline' : 'projected');
-          
+
           if (dataset.id !== WATER_SPECS[family]) return;
           const currentWaterSpec = layerSpec.find(_layer => _layer.family === family);
 
           if (!currentWaterSpec) return;
 
           if (dataset.id === currentWaterSpec.id) {
-            currentLayer = dataset.layer.find(_layer => {
-              if (_filters.scope === 'supply_chain') return _layer.id === SUPPLY_CHAIN_LAYER_ID
-              return _layer.id === _filters.indicator
+            currentLayer = dataset.layer.find((_layer) => {
+              if (_filters.scope === 'supply_chain') return _layer.id === SUPPLY_CHAIN_LAYER_ID;
+              return _layer.id === _filters.indicator;
             });
           }
 
           // Override the legend based on indicator, since this layer doesn't imply a specific indicator
-          if (currentLayer && indicatorKey && WATER_INDICATORS[indicatorKey]) currentLayer.legendConfig = WATER_INDICATORS[indicatorKey]
+          if (currentLayer && indicatorKey && WATER_INDICATORS[indicatorKey]) currentLayer.legendConfig = WATER_INDICATORS[indicatorKey];
         }
 
         if (isCrop) currentLayer = dataset.layer.find(_layer => (_filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default));
