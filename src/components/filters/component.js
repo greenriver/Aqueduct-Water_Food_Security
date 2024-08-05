@@ -17,7 +17,6 @@ import {
 // components
 import CountrySelect from 'components/country-select';
 import TooltipIcon from 'components/ui/TooltipIcon';
-import CropSelect from './filter-items/crops/crop-select'
 
 // constants
 import { APP_DEFINITIONS } from 'constants/definitions';
@@ -39,6 +38,7 @@ import {
 
 // utils
 import { logEvent } from 'utils/analytics';
+import CropSelect from './filter-items/crops/crop-select';
 
 class Filters extends PureComponent {
   constructor(props) {
@@ -56,17 +56,17 @@ class Filters extends PureComponent {
   getIndicatorKey(indicator) {
     const {
       filters
-    } = this.props
+    } = this.props;
 
-    const indicatorKey = ID_LOOKUP[indicator || filters.indicator]
-    if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[filters.scope] || []).includes(indicatorKey)) return undefined
+    const indicatorKey = ID_LOOKUP[indicator || filters.indicator];
+    if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[filters.scope] || []).includes(indicatorKey)) return undefined;
 
-    return indicatorKey
+    return indicatorKey;
   }
 
   getIndicator(indicator) {
-    const indicatorKey = this.getIndicatorKey(indicator)
-    return indicatorKey ? WATER_INDICATORS[indicatorKey] : undefined
+    const indicatorKey = this.getIndicatorKey(indicator);
+    return indicatorKey ? WATER_INDICATORS[indicatorKey] : undefined;
   }
 
   onSelectCountryToCompare(selected) {
@@ -80,7 +80,7 @@ class Filters extends PureComponent {
 
   openModal(slug) {
     const { toggleModal } = this.props;
-    const { props, ...info } = APP_DEFINITIONS[slug] || {}
+    const { props, ...info } = APP_DEFINITIONS[slug] || {};
 
     toggleModal(true, {
       children: InfoModal,
@@ -96,7 +96,7 @@ class Filters extends PureComponent {
       filters: { food },
       waterOptions
     } = this.props;
-    const indicator = this.getIndicator(selected.value)
+    const indicator = this.getIndicator(selected.value);
 
     if (selected && (indicator || selected.value === 'none')) {
       this.updateFilters(selected.value, 'indicator');
@@ -178,7 +178,7 @@ class Filters extends PureComponent {
     } = this.props;
     const disablesTimeline = !filters.indicator || filters.indicator === 'none';
     const componentClass = classnames('c-filters', { [className]: !!className });
-    const indicator = this.getIndicator()
+    const indicator = this.getIndicator();
 
     const timeline = (
       <div className="c-filters-item">
@@ -246,7 +246,7 @@ class Filters extends PureComponent {
           }}
         />
       </div>
-    )
+    );
 
     return (
       <div className={componentClass}>
@@ -348,17 +348,18 @@ class Filters extends PureComponent {
                   </div>
                 </div>
               )}
-            
+
             {/* Base filters for all tabs but Supply Chain */}
             {filters.scope !== 'supply_chain' && (
               <div className="filters-section">
                 <div className="row expanded collapse">
-                  <div className={classnames("small-12", "columns", "medium-4")}>
+                  <div className={classnames('small-12', 'columns', 'medium-4')}>
                     {/* Crops */}
                     <CropSelect
                       crop={filters.crop}
                       irrigation={filters.irrigation}
-                      onHelpIconClick={() => this.openModal('crops')}
+                      hideHelpIcon
+                      // onHelpIconClick={() => this.openModal('crops')}
                       onCropChange={(selected) => {
                         if (selected) {
                           this.updateFilters(selected.value, 'crop');
@@ -370,7 +371,7 @@ class Filters extends PureComponent {
                         if (selected.value) logEvent('[AQ-Food] Map', 'select irrigation', selected.label);
                       }}
                     />
-                    
+
                   </div>
                   <div className="small-12 medium-4 columns">
                     {/* Water */}
@@ -381,16 +382,16 @@ class Filters extends PureComponent {
                     <div className="c-filters-item">
                       <div className="filter-item-header">
                         <span className="title">Food Security</span>
-                        <button
+                        {/* <button
                           type="button"
                           className="icon-container"
-                          onClick={() => this.openModal('food-security')}
+                          // onClick={() => this.openModal('food-security')}
                         >
                           <Icon
                             name="icon-question"
                             className="title-icon"
                           />
-                        </button>
+                        </button> */}
                       </div>
 
                       <CustomSelect
@@ -441,9 +442,9 @@ class Filters extends PureComponent {
                     </div>
                     <ThresholdSlider
                       threshold={parseFloat(filters.threshold) || 0}
-                      onChange={threshold => {
-                        console.log({ threshold })
-                        this.updateFilters(threshold, 'threshold')
+                      onChange={(threshold) => {
+                        console.log({ threshold });
+                        this.updateFilters(threshold, 'threshold');
                       }}
                       values={indicator.rangeValues}
                       defaultValue={indicator.defaultValue}
