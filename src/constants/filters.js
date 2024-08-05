@@ -4,13 +4,11 @@ export const SET_FILTERS = 'SET_FILTERS';
 export const RESET_FILTERS = 'RESET_FILTERS';
 
 // FOOD OPTIONS
-export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food').map((layer) => {
-  return {
-    label: layer.name,
-    value: layer.id,
-    timeline: !!layer.timeline
-  };
-});
+export const FOOD_OPTIONS = layerSpec.filter(layer => layer.category === 'food').map(layer => ({
+  label: layer.name,
+  value: layer.id,
+  timeline: !!layer.timeline
+}));
 
 // Add 'none' option
 FOOD_OPTIONS.unshift({
@@ -39,7 +37,7 @@ export const YEAR_OPTIONS = [
 
 export const DATA_TYPE_OPTIONS = [
   { label: 'Absolute value', value: 'absolute' },
-  { label: 'Change from baseline', value: 'change_from_baseline' }
+  // { label: 'Change from baseline', value: 'change_from_baseline' }
 ];
 
 export default {
