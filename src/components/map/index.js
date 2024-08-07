@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // actions
 import { toggleModal } from 'aqueduct-components';
 import { setMapLocation, setLayerParametrization } from 'actions/map';
+import { parseMetadataLayer } from './utils';
 
 // selectors
 import {
@@ -30,9 +31,11 @@ export default connect(
     analysis: state.analysis,
     parametrization: state.map.parametrization
   }),
-  {
+  dispatch => ({
     setMapLocation,
-    toggleModal,
+    toggleModal: (bool, { childrenProps, children }) => {
+      dispatch(toggleModal(bool, { children, childrenProps: parseMetadataLayer(childrenProps) }));
+    },
     setLayerParametrization
-  }
+  })
 )(Map);
