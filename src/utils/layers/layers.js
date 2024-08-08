@@ -66,7 +66,7 @@ export const DATASETS = [
   },
   // baseline water
   {
-    id: '113258c9-14fc-4624-8b5c-76b064ac1ae9',
+    id: '979e6a3e-3905-401f-ab81-cd83c5c50c6c',
     name: 'Water Risk',
     category: 'water',
     family: 'baseline'

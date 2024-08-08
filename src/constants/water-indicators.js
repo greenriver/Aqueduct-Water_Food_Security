@@ -1,6 +1,6 @@
 export const IDS = {
   bws: {
-    baseline: '8074ac9b-9cca-4aaf-a112-26166a8e9c7d',
+    baseline: '8a0b596b-9b08-49ba-b636-2b1cd99b75a4',
     projectedAbsolute: '6f339b41-ea2f-4502-a454-d03bb22b540b',
     projectedChange: 'd48cf5e5-8692-4096-a711-4604f9be163c',
     legacy: {
@@ -10,7 +10,7 @@ export const IDS = {
     },
   },
   gtd: {
-    baseline: 'b687f3e4-e362-4a8d-9a69-a610710efd6b',
+    baseline: '74fa50e4-7fd7-47db-883c-59055ace451b',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
@@ -20,7 +20,7 @@ export const IDS = {
     }
   },
   iav: {
-    baseline: '1c149343-fae5-4c2d-a6d4-60f988866d89',
+    baseline: '7d721181-7b8a-463a-a7cf-c8f43ef316e2',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
@@ -30,7 +30,7 @@ export const IDS = {
     }
   },
   sev: {
-    baseline: '0eb346f7-83eb-4919-b032-8bc9957d2c2a',
+    baseline: '6a759294-e29d-41a7-892d-6ce670b2ec57',
     projectedAbsolute: '81b95d4d-2814-41b7-a425-49cfc1625f5e',
     projectedChange: '3bcc184d-c7e0-4099-ba5f-b7dbdbd4ac31',
     legacy: {
@@ -40,7 +40,7 @@ export const IDS = {
     }
   },
   drr: {
-    baseline: '7520db69-3cf2-42ba-a0ee-5ee37b3085db',
+    baseline: '2b333ecc-6df6-493a-95c8-83a57badc597',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
@@ -50,7 +50,7 @@ export const IDS = {
     }
   },
   cep: {
-    baseline: '23662aa6-cb2a-4e46-9be8-4a2d617f26c9',
+    baseline: '66654e5d-4263-4d3d-967e-7c351ac9ef40',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
@@ -60,31 +60,31 @@ export const IDS = {
     }
   },
   bwd: {
-    baseline: '160be93f-8c21-428a-b4c7-214b7ea4232d',
+    baseline: '3fcd9748-3d11-42f9-959e-03643525243c',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
-      baseline: '160be93f-8c21-428a-b4c7-214b7ea4232d',
+      baseline: '3fcd9748-3d11-42f9-959e-03643525243c',
       projectedAbsolute: null,
       projectedChange: null,
     }
   },
   udw: {
-    baseline: '11a98f9a-c03c-4757-b144-c2a78757f281',
+    baseline: '081a2763-fe5b-461b-8890-a93c7ec124e7',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
-      baseline: '11a98f9a-c03c-4757-b144-c2a78757f281',
+      baseline: '081a2763-fe5b-461b-8890-a93c7ec124e7',
       projectedAbsolute: null,
       projectedChange: null,
     }
   },
   usa: {
-    baseline: '3c3d5714-1200-4af1-b7c9-e1e01402319e',
+    baseline: '4dfb3131-9d8e-4ece-8ad2-58b4adafeb40',
     projectedAbsolute: null,
     projectedChange: null,
     legacy: {
-      baseline: '3c3d5714-1200-4af1-b7c9-e1e01402319e',
+      baseline: '4dfb3131-9d8e-4ece-8ad2-58b4adafeb40',
       projectedAbsolute: null,
       projectedChange: null,
     }
@@ -100,40 +100,40 @@ export const IDS = {
   //     projectedChange: null,
   //   }
   // },
-}
+};
 
 export const ID_LOOKUP = (
   Object.entries(IDS)
-  .map(([k, vals]) => {
-    let result = []
-    const { legacy, ...others } = vals
+    .map(([k, vals]) => {
+      let result = [];
+      const { legacy, ...others } = vals;
 
-    result = [
-      ...result,
-      ...Object.values(others).filter(e => e),
-      ...Object.values(legacy).filter(e => e)
-    ]
+      result = [
+        ...result,
+        ...Object.values(others).filter(e => e),
+        ...Object.values(legacy).filter(e => e)
+      ];
 
-    return [k, result.reduce((acc, e) => acc.includes(e) ? acc : [...acc, e], [])]
-  })
-  .reduce((acc, [key, ids]) => {
-    let result = { ...acc }
-    ids.forEach(id => result[id] = key)
-    return result
-  }, {})
-)
+      return [k, result.reduce((acc, e) => (acc.includes(e) ? acc : [...acc, e]), [])];
+    })
+    .reduce((acc, [key, ids]) => {
+      const result = { ...acc };
+      ids.forEach(id => result[id] = key);
+      return result;
+    }, {})
+);
 
-export const SUPPLY_CHAIN_LAYER_ID = "ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd"
+export const SUPPLY_CHAIN_LAYER_ID = 'ffc878aa-efb1-4258-bd40-2cf9fbfb6ddd';
 
 const NO_DATA_LEGEND_ITEM = {
   color: '#4E4E4E',
   name: 'No data'
 };
 
-const numberToRaw =  v => (v && parseFloat(v)) ? parseFloat(v) : 0
-const numberFromRaw =  v => (v && parseFloat(v)) ? parseFloat(v) : 0
-const percentToRaw =  v => (v && parseFloat(v)) ? parseFloat(v) / 100 : 0
-const percentFromRaw =  v => (v && parseFloat(v)) ? parseFloat(v) / 100 : 0
+const numberToRaw = v => ((v && parseFloat(v)) ? parseFloat(v) : 0);
+const numberFromRaw = v => ((v && parseFloat(v)) ? parseFloat(v) : 0);
+const percentToRaw = v => ((v && parseFloat(v)) ? parseFloat(v) / 100 : 0);
+const percentFromRaw = v => ((v && parseFloat(v)) ? parseFloat(v) / 100 : 0);
 
 export const WATER_INDICATORS = {
   // Groundwater Table Decline
@@ -502,7 +502,7 @@ export const WATER_INDICATORS = {
     disclaimer: [NO_DATA_LEGEND_ITEM],
     type: 'choropleth'
   },
-}
+};
 
 export const SUPPLY_CHAIN_WATER_INDICATORS = [
   {
@@ -578,7 +578,7 @@ export const ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE = {
     'udw',
     'usa',
   ],
-}
+};
 
 export const BASELINE_WATER_INDICATORS = [
   {
@@ -691,7 +691,7 @@ export const ALLOWED_PROJECTED_WATER_INDICATORS = [
   IDS.sev.projectedAbsolute,
   IDS.bws.projectedChange,
   IDS.sev.projectedChange,
-]
+];
 
 export default {
   BASELINE_WATER_INDICATORS,

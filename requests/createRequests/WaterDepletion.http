@@ -1,0 +1,109 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+### Create water depletion
+POST {{host}}/v1/dataset/979e6a3e-3905-401f-ab81-cd83c5c50c6c/layer
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Water Depletion",
+  "slug": "Water-Depletion",
+  "application": [
+      "aqueduct"
+  ],
+  "provider": "cartodb",
+  "default": true,
+  "protected": false,
+  "published": true,
+  "env": "production",
+  "layerConfig": {
+      "account": "wri-rw",
+      "params_config": [],
+      "sql_config": [
+          {
+              "key": "where",
+              "key_params": [
+                  {
+                      "key": "iso",
+                      "required": false
+                  },
+                  {
+                      "key": "crop",
+                      "required": false
+                  },
+                  {
+                      "key": "irrigation",
+                      "required": false
+                  },
+                  {
+                      "key": "rank",
+                      "required": false
+                  }
+              ]
+          }
+      ],
+      "body": {
+          "maxzoom": 18,
+          "minzoom": 3,
+          "layers": [
+              {
+                  "type": "cartodb",
+                  "options": {
+                      "sql": "SELECT s.aq30_id as cartodb_id, coalesce(bwd_cat, -9999) as  water_risk,  coalesce(NULLIF(bwd_label,''), 'No Data') as label, r.the_geom, r.the_geom_webmercator FROM water_risk_indicators_annual_aqueduct40 s LEFT JOIN y2018m12d06_rh_master_shape_v01 r on s.aq30_id=r.aq30_id WHERE s.pfaf_id != -9999 and s.gid_1 != '-9999'",
+                      "cartocss": "#water_risk_indicators_annual{ polygon-fill:transparent; polygon-opacity: 1; line-color:transparent; line-width: 1; line-opacity: 1; } #water_risk_indicators_annual [water_risk=4] { polygon-fill:#990000; line-color:#990000 } #water_risk_indicators_annual [water_risk=3] { polygon-fill:  #FF1900; line-color:  #FF1900 } #water_risk_indicators_annual [water_risk=2] { polygon-fill: #FF9900; line-color: #FF9900 } #water_risk_indicators_annual [water_risk=1] { polygon-fill: #FFE600; line-color:  #FFE600 } #water_risk_indicators_annual [water_risk=0] { polygon-fill: #FFFF99; line-color:  #FFFF99 } #water_risk_indicators_annual [water_risk=-1] { polygon-fill: #808080; line-color:  #808080 } #water_risk_indicators_annual [water_risk<-1] { polygon-fill: #4E4E4E; line-color:  #4E4E4E }",
+                      "cartocss_version": "2.3.0"
+                  }
+              },
+              {
+                  "type": "cartodb",
+                  "options": {
+                      "sql": "SELECT cartodb_id, the_geom_webmercator FROM crops_projected {{where}}",
+                      "cartocss": " #layer{polygon-fill: #FF6600; polygon-opacity: 1; line-color: #FF6600; line-width: 0.5; line-opacity: 1; comp-op: dst-in;}",
+                      "cartocss_version": "2.3.0"
+                  }
+              }
+          ]
+      }
+  },
+  "legendConfig": {
+      "type": "choropleth",
+      "items": [
+          {
+              "name": "Low",
+              "value": "(<5%)",
+              "color": "#FFFF99"
+          },
+          {
+              "name": "Low-medium",
+              "value": "(5-25%)",
+              "color": "#FFE600"
+          },
+          {
+              "name": "Medium-high",
+              "value": "(25-50%)",
+              "color": "#FF9900"
+          },
+          {
+              "name": "High",
+              "value": "(50-75%)",
+              "color": "#FF1900"
+          },
+          {
+              "name": "Extremely high",
+              "value": "(>75%)",
+              "color": "#990000"
+          }
+      ],
+      "disclaimer": [
+          {
+              "name": "Arid and low water use",
+              "color": "#808080"
+          },
+          {
+              "name": "No data",
+              "color": "#4E4E4E"
+          }
+      ]
+  }
+}

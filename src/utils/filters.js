@@ -39,7 +39,7 @@ export const getIndicator = ({ indicator }) => {
 export const getWaterColumn = ({ indicator, year, type }, sufix, widget) => {
   const layers = {
     // Water stress
-    '8074ac9b-9cca-4aaf-a112-26166a8e9c7d': {
+    '8a0b596b-9b08-49ba-b636-2b1cd99b75a4': {
       indicator: 'ws',
       dataType: type === 'change_from_baseline' && !widget ? 'c' : 't',
       sufix: type === 'change_from_baseline' && !widget ? 'l' : 'r'
@@ -80,7 +80,7 @@ export const getWaterColumn = ({ indicator, year, type }, sufix, widget) => {
    * For Seasonal Variability-based widgets, their table name
    * don't match with its dataset one, that's why we have to changed it
    * manually. This should be REMOVED in the future.
-   **/
+   * */
   if (layer.indicator === 'sv' && widget === true) {
     _indicator = 'ws';
   }
@@ -103,7 +103,6 @@ export const getObjectConversion = (
   paramsConfig = [],
   sqlConfig = []
 ) => {
-
   const conversions = {
     iso: key => ({
       key,
@@ -137,12 +136,10 @@ export const getObjectConversion = (
       key,
       value: filters.period_value || null
     }),
-    year: (key, dictionaryName) => {
-      return {
-        key,
-        value: WIDGET_DICTIONARY[dictionaryName || category].yearOptions[filters[key]] || 'baseline'
-      }
-    },
+    year: (key, dictionaryName) => ({
+      key,
+      value: WIDGET_DICTIONARY[dictionaryName || category].yearOptions[filters[key]] || 'baseline'
+    }),
     irrigation: key => ({
       key,
       // We can't have a irrigation different from 1, in this case we don't need to add anything
