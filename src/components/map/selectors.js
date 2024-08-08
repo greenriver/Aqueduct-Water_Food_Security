@@ -82,8 +82,8 @@ export const getActiveLayers = createSelector(
       if (dataset.layer && dataset.layer.length) {
         // isFood = (dataset.id === _filters.food);
         isMask = (_filters.scope === 'country' && _filters.country && dataset.id === 'ea9dacf1-c11e-4e6a-ad63-8804111a75ba');
-        isCrop = (!isWater && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
-        isOneCrop = (!isWater && _filters.crop !== 'all' && dataset.id === '4a2b250e-25ab-4da3-9b83-dc318995eee1');
+        isCrop = (!isWater && dataset.id === '86d9f802-fabf-46e7-83ed-7c5505140208');
+        isOneCrop = (!isWater && _filters.crop !== 'all' && dataset.id === '86d9f802-fabf-46e7-83ed-7c5505140208');
 
         if (isWater) {
           const indicatorKey = ID_LOOKUP[_filters.indicator];
@@ -109,7 +109,7 @@ export const getActiveLayers = createSelector(
         }
 
         if (isCrop) currentLayer = dataset.layer.find(_layer => (_filters.crop !== 'all' ? _layer.legendConfig.sqlQuery : _layer.default));
-        if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '32e964db-a2a0-4329-9bb1-470ebc99b622');
+        if (isOneCrop) currentLayer = dataset.layer.find(_layer => _layer.id === '383f2ae6-6925-49e8-9e56-e5a84b38fd4a');
         if (isMask) currentLayer = dataset.layer.find(_layer => _layer.default);
 
         if (currentLayer && (isWater || isMask || isCrop || isOneCrop)) {

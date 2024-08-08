@@ -87,8 +87,8 @@ export const DATASETS = [
   },
   // all crops / one crop
   {
-    id: '4a2b250e-25ab-4da3-9b83-dc318995eee1',
-    layerId: '4a2b250e-25ab-4da3-9b83-dc318995eee1',
+    id: '86d9f802-fabf-46e7-83ed-7c5505140208',
+    layerId: '86d9f802-fabf-46e7-83ed-7c5505140208',
     name: 'All crops',
     category: 'crop'
   },
