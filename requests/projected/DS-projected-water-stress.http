@@ -1,0 +1,443 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+
+### get projected dataset
+GET {{host}}/v1/dataset/3cca5144-63d2-4ddb-af53-094603b702f3
+### get crops dataset and check it has four layers
+GET {{host}}/v1/dataset/3cca5144-63d2-4ddb-af53-094603b702f3?includes=layer,metadata
+
+# ┌─────────┬────────────────────────────────────────┬──────────────────────────────────────────────┬────────────────────────────────────────┐
+# │ (index) │                   id                   │                     slug                     │                dataset                 │
+# ├─────────┼────────────────────────────────────────┼──────────────────────────────────────────────┼────────────────────────────────────────┤
+# │    0    │ '6f339b41-ea2f-4502-a454-d03bb22b540b' │          'Projected-Water-Stress_1'          │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    1    │ '81b95d4d-2814-41b7-a425-49cfc1625f5e' │      'Projected-Seasonal-Variability_1'      │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    2    │ 'd48cf5e5-8692-4096-a711-4604f9be163c' │     'Projected-Change-in-Water-Stress_1'     │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    3    │ '3bcc184d-c7e0-4099-ba5f-b7dbdbd4ac31' │ 'Projected-Change-in-Seasonal-Variability_1' │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# └─────────┴────────────────────────────────────────┴──────────────────────────────────────────────┴────────────────────────────────────────┘
+
+### Create dataset
+POST {{host}}/v1/dataset
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "dataset": {
+    "name": "Water Risk Projected",
+    "connectorType": "rest",
+    "provider": "cartodb",
+    "connectorUrl": "https://wri-rw.carto.com/tables/crops_projected/public",
+    "application": [
+        "aqueduct"
+    ]
+  }
+}
+
+
+### new dataset
+GET {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09
+### new dataset
+GET {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09?includes=layer
+
+## lyr allcrops dcffe68a-2c51-4847-aa08-0f9e471a8ceb
+## lyr one crop 383f2ae6-6925-49e8-9e56-e5a84b38fd4a
+
+
+### create layer in new dataset
+
+POST {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09/layer
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "All Crops",
+  "application": [
+    "aqueduct"
+  ],
+  "provider": "cartodb",
+  "default": true,
+  "protected": false,
+  "published": true,
+  "env": "production",
+  "layerConfig": {
+    "body": {
+      "layers": [
+        {
+          "options": {
+            "cartocss_version": "2.3.0",
+            "cartocss": "#layer { polygon-fill: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops'), '='); line-color: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops'), '=');}",
+            "sql": "SELECT * FROM merged_allcrops_dissolve_v1_2020v1r0 WHERE iso<>'all' {{and}}"
+          },
+          "type": "cartodb"
+        }
+      ],
+      "minzoom": 3,
+      "maxzoom": 18
+    },
+    "sql_config": [
+      {
+        "key_params": [
+          {
+            "key": "iso",
+            "required": false
+          },
+          {
+            "key": "irrigation",
+            "required": false
+          }
+        ],
+        "key": "and"
+      }
+    ],
+    "params_config": [],
+    "account": "wri-rw"
+  },
+  "legendConfig": {
+    "items": [
+      {
+        "items": [
+          {
+            "color": "#4B0082",
+            "name": "Wheat"
+          },
+          {
+            "color": "#800080",
+            "name": "Rice"
+          },
+          {
+            "color": "#C71585",
+            "name": "Maize"
+          },
+          {
+            "color": "#DB7093",
+            "name": "Barley"
+          },
+          {
+            "color": "#FF1493",
+            "name": "Pearl millet"
+          },
+          {
+            "color": "#FF69B4",
+            "name": "Small millet"
+          },
+          {
+            "color": "#FFB6C1",
+            "name": "Sorghum"
+          },
+          {
+            "color": "#FFC0CB",
+            "name": "Other cereals"
+          }
+        ],
+        "color": "#C71585",
+        "name": "Cereals"
+      },
+      {
+        "items": [
+          {
+            "color": "#00008B",
+            "name": "Beans"
+          },
+          {
+            "color": "#0000CD",
+            "name": "Chickpeas"
+          },
+          {
+            "color": "#0000FF",
+            "name": "Cowpeas"
+          },
+          {
+            "color": "#1E90FF",
+            "name": "Pigeonpeas"
+          },
+          {
+            "color": "#00BFFF",
+            "name": "Lentils"
+          },
+          {
+            "color": "#87CEFA",
+            "name": "Other pulses"
+          }
+        ],
+        "color": "#0000FF",
+        "name": "Pulses and legumes"
+      },
+      {
+        "items": [
+          {
+            "color": "#800000",
+            "name": "Potato"
+          },
+          {
+            "color": "#8B0000",
+            "name": "Sweet potato"
+          },
+          {
+            "color": "#A52A2A",
+            "name": "Yams"
+          },
+          {
+            "color": "#B22222",
+            "name": "Cassava"
+          },
+          {
+            "color": "#DC143C",
+            "name": "Other roots"
+          }
+        ],
+        "color": "#A52A2A",
+        "name": "Roots And Tubers"
+      },
+      {
+        "items": [
+          {
+            "color": "#FFD700",
+            "name": "Banana"
+          },
+          {
+            "color": "#FFA500",
+            "name": "Plantain"
+          },
+          {
+            "color": "#FF8C00",
+            "name": "Tropical fruit"
+          },
+          {
+            "color": "#FF6347",
+            "name": "Temperate fruit"
+          }
+        ],
+        "color": "#FFA500",
+        "name": "Fruit and nuts"
+      },
+      {
+        "items": [
+          {
+            "color": "#006400",
+            "name": "Soybean"
+          },
+          {
+            "color": "#228B22",
+            "name": "Groundnut"
+          },
+          {
+            "color": "#6B8E23",
+            "name": "Coconut"
+          },
+          {
+            "color": "#556B2F",
+            "name": "Oilpalm"
+          },
+          {
+            "color": "#808000",
+            "name": "Sunflower"
+          },
+          {
+            "color": "#2E8B57",
+            "name": "Rapeseed"
+          },
+          {
+            "color": "#3CB371",
+            "name": "Sesameseed"
+          },
+          {
+            "color": "#8FBC8F",
+            "name": "Other oil crops"
+          }
+        ],
+        "color": "#6B8E23",
+        "name": "Oilseed crops"
+      },
+      {
+        "items": [
+          {
+            "color": "#FFDAB9",
+            "name": "Sugarcane"
+          },
+          {
+            "color": "#FFE4B5",
+            "name": "Sugarbeet"
+          }
+        ],
+        "color": "#FFDAB9",
+        "name": "Sugar crops"
+      },
+      {
+        "items": [
+          {
+            "color": "#E6E6FA",
+            "name": "Cotton"
+          },
+          {
+            "color": "#FFF0F5",
+            "name": "Other fibre crops"
+          }
+        ],
+        "color": "#E6E6FA",
+        "name": "Fibres"
+      },
+      {
+        "items": [
+          {
+            "color": "#A0522D",
+            "name": "Arabica coffee"
+          },
+          {
+            "color": "#8B4513",
+            "name": "Robusta coffee"
+          },
+          {
+            "color": "#D2691E",
+            "name": "Cocoa"
+          },
+          {
+            "color": "#CD853F",
+            "name": "Tea"
+          },
+          {
+            "color": "#DAA520",
+            "name": "Tobacco"
+          }
+        ],
+        "color": "#8B4513",
+        "name": "Stimulants"
+      },
+      {
+        "items": [
+          {
+            "color": "#008000",
+            "name": "Vegetables"
+          }
+        ],
+        "color": "#008000",
+        "name": "Vegetables"
+      },
+      {
+        "items": [
+          {
+            "color": "#2F4F4F",
+            "name": "Rest of crops"
+          }
+        ],
+        "color": "#2F4F4F",
+        "name": "Other crops"
+      }
+    ],
+    "type": "group"
+  },
+  "interactionConfig": {
+    "output": [
+      {
+        "type": "string",
+        "suffix": "",
+        "property": "Crop",
+        "prefix": "",
+        "format": null,
+        "column": "crop"
+      }
+    ]
+  }
+}
+
+
+### create layer2 in new dataset
+
+POST {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208/layer
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "One Crop",
+  "slug": "One-Crop",
+  "application": [
+    "aqueduct"
+  ],
+  "provider": "cartodb",
+  "default": true,
+  "protected": false,
+  "published": true,
+  "env": "production",
+  "layerConfig": {
+    "body": {
+      "layers": [
+        {
+          "options": {
+            "cartocss_version": "2.3.0",
+            "cartocss": "#crops_projected [ prod_total > {{bucket[4]}} ] {line-color: {{color}};line-width: 0;line-opacity: 1; polygon-fill: {{color}};polygon-opacity: 1;} #crops_projected [ prod_total <= {{bucket[4]}} ] {line-color: {{color}};line-width: 0;line-opacity: 0.8; polygon-fill: {{color}};polygon-opacity: 0.8;} #crops_projected [ prod_total <= {{bucket[3]}} ] {line-color: {{color}};line-width: 0;line-opacity: 0.6;polygon-fill: {{color}}; polygon-opacity: 0.60;} #crops_projected [ prod_total <= {{bucket[2]}} ] {line-color: {{color}};line-width: 0;line-opacity: 0.4; polygon-fill: {{color}}; polygon-opacity: 0.40;} #crops_projected [ prod_total <= {{bucket[1]}} ] {line-color: {{color}};line-width: 0;line-opacity: 0.2; polygon-fill: {{color}};polygon-opacity: 0.20;} #crops_projected [ prod_total <= {{bucket[0]}} ] {line-color: {{color}};line-width: 0;line-opacity: 0.1; polygon-fill: {{color}}; polygon-opacity: 0.10;}",
+            "sql": "SELECT * FROM crops_projected {{where}}"
+          },
+          "type": "cartodb"
+        }
+      ],
+      "minzoom": 3,
+      "maxzoom": 18
+    },
+    "sql_config": [
+      {
+        "key_params": [
+          {
+            "required": false,
+            "key": "iso"
+          },
+          {
+            "required": false,
+            "key": "crop"
+          },
+          {
+            "required": true,
+            "key": "irrigation"
+          }
+        ],
+        "key": "where"
+      }
+    ],
+    "params_config": [],
+    "account": "wri-rw"
+  },
+  "legendConfig": {
+    "type": "choropleth",
+    "items": [],
+    "units": "metric tons of production",
+    "params_config": [],
+    "sql_config": [
+      {
+        "key": "where",
+        "key_params": [
+          {
+            "key": "iso",
+            "required": true
+          },
+          {
+            "key": "crop",
+            "required": true
+          },
+          {
+            "key": "irrigation",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "sql_query": "select array_agg(bucket::numeric) as bucket from (select json_array_elements(bucket::json)::text as bucket FROM crop_buckets_v2_2020v1r0 {{where}}) s"
+  },
+  "interactionConfig": {
+    "output": [
+      {
+        "column": "name_cntr",
+        "format": null,
+        "prefix": "",
+        "property": "Country",
+        "suffix": "",
+        "type": "string"
+      },
+      {
+        "column": "prod_total",
+        "format": null,
+        "prefix": "",
+        "property": "Production",
+        "suffix": "mt",
+        "type": "string"
+      }
+    ]
+  }  
+}

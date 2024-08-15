@@ -1,0 +1,84 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+### get old layer
+GET {{host}}/v1/layer/70198f5e-3967-4bf9-b8a5-24d3b7e20561
+### create layer in new dataset
+
+
+### create layer in new dataset
+
+POST {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09/layer
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Projected Seasonal Variability",
+  "application": [
+      "aqueduct"
+  ],
+  "provider": "cartodb",
+  "env": "production",
+  "layerConfig": {
+      "sql_config": [],
+      "params_config": [
+          {
+              "required": true,
+              "key": "year"
+          },
+          {
+              "required": true,
+              "key": "scenario"
+          }
+      ],
+      "body": {
+          "layers": [
+              {
+                  "options": {
+                      "cartocss_version": "2.3.0",
+                      "cartocss": "#water_risk_indicators_future_aqueduct40{ polygon-fill:transparent; polygon-opacity: 1; line-color:transparent; line-width: 1; line-opacity: 1; } #water_risk_indicators_future_aqueduct40 [label='Extremely High (>1.33)'] { polygon-fill:#990000; line-color:#990000 } #water_risk_indicators_future_aqueduct40 [label='High (1.00-1.33)'] { polygon-fill:  #FF1900; line-color:  #FF1900 } #water_risk_indicators_future_aqueduct40 [label='Medium - High (0.66-1.00)'] { polygon-fill: #FF9900; line-color: #FF9900 } #water_risk_indicators_future_aqueduct40 [label='Low - Medium (0.33-0.66)'] { polygon-fill: #FFE600; line-color:  #FFE600 } #water_risk_indicators_future_aqueduct40 [label='Low (<0.33)'] { polygon-fill: #FFFF99; line-color:  #FFFF99 } #water_risk_indicators_future_aqueduct40 [label='No Data'] { polygon-fill: #4E4E4E; line-color:  #4E4E4E }",
+                      "sql": "with r as (SELECT pfaf_id, label FROM water_risk_indicators_future_aqueduct40 WHERE year = {{year}} and type = 'future_value' and indicator = 'seasonal_variability' and scenario = '{{scenario}}') SELECT s.cartodb_id, s.pfaf_id, s.the_geom, s.the_geom_webmercator, r.label FROM y2018m12d06_rh_master_shape_v01 s  LEFT JOIN r on s.pfaf_id=r.pfaf_id WHERE s.the_geom is not null and r.label is not null"
+                  },
+                  "type": "cartodb"
+              }
+          ]
+      },
+      "account": "wri-rw"
+  },
+  "legendConfig": {
+      "type": "choropleth",
+      "items": [
+          {
+              "value": "(<0.33)",
+              "name": "Low",
+              "color": "#FFFF99"
+          },
+          {
+              "value": "(0.33-0.66)",
+              "name": "Low to medium",
+              "color": "#FFE600"
+          },
+          {
+              "value": "(0.66-1.0)",
+              "name": "Medium to high",
+              "color": "#FF9900"
+          },
+          {
+              "value": "(1.0-1.33)",
+              "name": "High",
+              "color": "#FF1900"
+          },
+          {
+              "value": "(>1.33)",
+              "name": "Extremely high",
+              "color": "#990000"
+          }
+      ],
+      "disclaimer": [
+          {
+              "name": "No data",
+              "color": "#4E4E4E"
+          }
+      ]
+  }
+}

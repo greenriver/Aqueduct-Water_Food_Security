@@ -1,7 +1,7 @@
 export const IDS = {
   bws: {
     baseline: '8a0b596b-9b08-49ba-b636-2b1cd99b75a4',
-    projectedAbsolute: '6f339b41-ea2f-4502-a454-d03bb22b540b',
+    projectedAbsolute: '9eece26c-d5b0-4209-adbb-f5a75938e9b0',
     projectedChange: 'd48cf5e5-8692-4096-a711-4604f9be163c',
     legacy: {
       baseline: '1a1d4f61-f1b3-4c1a-bfb5-9d0444ecdd56',
@@ -31,7 +31,7 @@ export const IDS = {
   },
   sev: {
     baseline: '6a759294-e29d-41a7-892d-6ce670b2ec57',
-    projectedAbsolute: '81b95d4d-2814-41b7-a425-49cfc1625f5e',
+    projectedAbsolute: '606023da-06d0-4fa2-8784-c4901c7d167e',
     projectedChange: '3bcc184d-c7e0-4099-ba5f-b7dbdbd4ac31',
     legacy: {
       baseline: '64f65bd0-6dc5-4ce8-9421-a8e0a1eab40c',

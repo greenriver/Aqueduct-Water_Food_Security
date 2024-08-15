@@ -73,7 +73,7 @@ export const DATASETS = [
   },
   // projected water
   {
-    id: '3cca5144-63d2-4ddb-af53-094603b702f3',
+    id: '1ab7ce3e-a8b4-45d4-b136-7f6015662a09',
     name: 'Projected Water Risk',
     category: 'water',
     family: 'projected'
