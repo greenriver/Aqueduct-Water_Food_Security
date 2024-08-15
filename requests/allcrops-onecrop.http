@@ -5,7 +5,7 @@
 ### get crops dataset and check it has two layers
 GET {{host}}/v1/dataset/4a2b250e-25ab-4da3-9b83-dc318995eee1
 ### get crops dataset and check it has two layers
-GET {{host}}/v1/dataset/4a2b250e-25ab-4da3-9b83-dc318995eee1?includes=layer
+GET {{host}}/v1/dataset/4a2b250e-25ab-4da3-9b83-dc318995eee1?includes=layer,metadata
 
 ## old lyr allcrops f67f5553-cc70-441c-9d1a-59044d552d58
 ## old lyr onecrop 32e964db-a2a0-4329-9bb1-470ebc99b622
