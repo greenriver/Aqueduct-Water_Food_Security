@@ -32,7 +32,7 @@ export const CATEGORIES = {
 export const YEAR_OPTIONS = [
   { value: 'baseline', label: 'Baseline' },
   { value: '2030', label: '2030' },
-  { value: '2040', label: '2040' }
+  { value: '2050', label: '2050' }
 ];
 
 export const DATA_TYPE_OPTIONS = [

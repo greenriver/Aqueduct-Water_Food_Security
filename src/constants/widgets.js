@@ -22,7 +22,8 @@ export const WIDGET_DICTIONARY = {
       baseline: 2010,
       2020: 2020,
       2030: 2030,
-      2040: 2040
+      2040: 2040,
+      2050: 2050,
     }
   },
   'widget-2014': {
@@ -30,7 +31,8 @@ export const WIDGET_DICTIONARY = {
       baseline: 2014,
       2020: 2020,
       2030: 2030,
-      2040: 2040
+      2040: 2040,
+      2050: 2050,
     }
   }
 };
