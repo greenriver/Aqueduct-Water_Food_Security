@@ -41,10 +41,13 @@ GET {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208?includes=layer
 ## lyr allcrops dcffe68a-2c51-4847-aa08-0f9e471a8ceb
 ## lyr one crop 383f2ae6-6925-49e8-9e56-e5a84b38fd4a
 
+### all crops layer
+GET {{host}}/v1/layer/dcffe68a-2c51-4847-aa08-0f9e471a8ceb
+
 
 ### create layer in new dataset
 
-POST {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208/layer
+PATCH {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208/layer/dcffe68a-2c51-4847-aa08-0f9e471a8ceb
 Content-Type: application/json
 Authorization: {{token}}
 
@@ -54,17 +57,13 @@ Authorization: {{token}}
     "aqueduct"
   ],
   "provider": "cartodb",
-  "default": true,
-  "protected": false,
-  "published": true,
-  "env": "production",
   "layerConfig": {
     "body": {
       "layers": [
         {
           "options": {
             "cartocss_version": "2.3.0",
-            "cartocss": "#layer { polygon-fill: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops'), '='); line-color: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops'), '=');}",
+            "cartocss": "#layer { polygon-fill: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F, #FF724C), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops', 'citrus'), '='); line-color: ramp([crop], (#4B0082, #800080, #C71585, #DB7093, #FF1493, #FF69B4, #FFB6C1, #FFC0CB, #00008B, #0000CD, #0000FF, #1E90FF, #00BFFF, #87CEFA, #800000, #8B0000, #A52A2A, #B22222, #DC143C, #FFD700, #FFA500, #FF8C00, #FF6347, #006400, #228B22, #6B8E23, #556B2F, #808000, #2E8B57, #3CB371, #8FBC8F, #FFDAB9, #FFE4B5, #E6E6FA, #FFF0F5, #A0522D, #8B4513, #D2691E, #CD853F, #DAA520, #008000, #2F4F4F, #FF724C), ('wheat', 'rice', 'maize', 'barley', 'pearl millet', 'small millet', 'sorghum', 'other cereals', 'bean', 'chickpea', 'cowpea', 'pigeonpea', 'lentil', 'other pulses', 'potato', 'sweet potato', 'yams', 'cassava', 'other roots', 'banana', 'plantain', 'tropical fruit', 'temperate fruit', 'soybean', 'groundnut', 'coconut', 'oilpalm', 'sunflower', 'rapeseed', 'sesameseed', 'other oil crops', 'sugarcane', 'sugarbeet', 'cotton', 'other fibre crops', 'arabica coffee', 'robusta coffee', 'cocoa', 'tea', 'tobacco', 'vegetables', 'rest of crops', 'citrus'), '=');}",
             "sql": "SELECT * FROM merged_allcrops_dissolve_v1_2020v1r0 WHERE iso<>'all' {{and}}"
           },
           "type": "cartodb"
@@ -194,12 +193,16 @@ Authorization: {{token}}
             "name": "Banana"
           },
           {
+            "color": "#FF724C",
+            "name": "Citrus"
+          },
+          {
             "color": "#FFA500",
             "name": "Plantain"
           },
           {
             "color": "#FF8C00",
-            "name": "Tropical fruit"
+            "name": "Other tropical fruit"
           },
           {
             "color": "#FF6347",
@@ -305,7 +308,15 @@ Authorization: {{token}}
         "items": [
           {
             "color": "#008000",
-            "name": "Vegetables"
+            "name": "Other vegetables"
+          },
+          {
+            "color": "#81b622",
+            "name": "Onion"
+          },
+          {
+            "color": "#49b622",
+            "name": "Tomato"
           }
         ],
         "color": "#008000",
@@ -316,6 +327,10 @@ Authorization: {{token}}
           {
             "color": "#2F4F4F",
             "name": "Rest of crops"
+          },
+          {
+            "color": "#808080",
+            "name": "Rubber"
           }
         ],
         "color": "#2F4F4F",
@@ -341,7 +356,7 @@ Authorization: {{token}}
 
 ### create layer2 in new dataset
 
-POST {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208/layer
+PATCH  {{host}}/v1/dataset/86d9f802-fabf-46e7-83ed-7c5505140208/layer/383f2ae6-6925-49e8-9e56-e5a84b38fd4a
 Content-Type: application/json
 Authorization: {{token}}
 
@@ -352,10 +367,6 @@ Authorization: {{token}}
     "aqueduct"
   ],
   "provider": "cartodb",
-  "default": true,
-  "protected": false,
-  "published": true,
-  "env": "production",
   "layerConfig": {
     "body": {
       "layers": [
