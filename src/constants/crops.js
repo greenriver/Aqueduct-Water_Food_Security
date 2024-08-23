@@ -58,7 +58,7 @@ export const CROP_COLOR_DICTIONARY = {
 
 export const CROP_OPTIONS = [
   { value: 'all', label: 'All crops' },
-  { value: 'arabic coffee', label: 'Arabic coffee', color: CROP_COLOR_DICTIONARY['arabic coffee'] },
+  { value: 'arabic coffee', label: 'Arabica coffee', color: CROP_COLOR_DICTIONARY['arabic coffee'] },
   { value: 'banana', label: 'Banana', color: CROP_COLOR_DICTIONARY.banana },
   { value: 'barley', label: 'Barley', color: CROP_COLOR_DICTIONARY.barley },
   { value: 'bean', label: 'Bean', color: CROP_COLOR_DICTIONARY.bean },
