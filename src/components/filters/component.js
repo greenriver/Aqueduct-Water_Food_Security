@@ -358,8 +358,7 @@ class Filters extends PureComponent {
                     <CropSelect
                       crop={filters.crop}
                       irrigation={filters.irrigation}
-                      hideHelpIcon
-                      // onHelpIconClick={() => this.openModal('crops')}
+                      onHelpIconClick={() => this.openModal('crops')}
                       onCropChange={(selected) => {
                         if (selected) {
                           this.updateFilters(selected.value, 'crop');
@@ -382,16 +381,16 @@ class Filters extends PureComponent {
                     <div className="c-filters-item">
                       <div className="filter-item-header">
                         <span className="title">Food Security</span>
-                        {/* <button
+                        <button
                           type="button"
                           className="icon-container"
-                          // onClick={() => this.openModal('food-security')}
+                          onClick={() => this.openModal('food-security')}
                         >
                           <Icon
                             name="icon-question"
                             className="title-icon"
                           />
-                        </button> */}
+                        </button>
                       </div>
 
                       <CustomSelect
@@ -443,7 +442,6 @@ class Filters extends PureComponent {
                     <ThresholdSlider
                       threshold={parseFloat(filters.threshold) || 0}
                       onChange={(threshold) => {
-                        console.log({ threshold });
                         this.updateFilters(threshold, 'threshold');
                       }}
                       values={indicator.rangeValues}
