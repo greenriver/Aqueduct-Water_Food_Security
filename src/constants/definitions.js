@@ -3,7 +3,7 @@ export const APP_DEFINITIONS = {
     title: 'Crops',
     instructions: 'Select a single crop of interest or "all crops" to view the area where the crop(s) is grown.',
     description: '<p>"All crops" represent all of the crops that are included in the tool as displayed in the menu. The crop layers displayed on the map reflect where the harvested area exceeds 10 hectares per pixel in 2010, regardless of the timeframe selected.',
-    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
+    source: '<a href="https://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2020</a>'
   },
   'water-risk': {
     title: 'Water Risk',
@@ -113,7 +113,7 @@ export const APP_DEFINITIONS = {
         <li>Kilocalories per person represents the availability of calories per person.</li>
         <li>Share of population at risk of hunger represents the percentage of the population at risk of suffering from malnourishment.</li>
       </ul>`,
-    source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a> & <a href="https://doi.org/10.1016/j.gfs.2024.100755" target="_blank" rel="noopener noreferrer">Research paper</a>'
+    source: '<a href="https://hdl.handle.net/10568/148953" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 3.6</a> & <a href="https://doi.org/10.1016/j.gfs.2024.100755" target="_blank" rel="noopener noreferrer">Research paper</a>'
   },
   timeframe: {
     title: 'Timeframe',
@@ -122,7 +122,7 @@ export const APP_DEFINITIONS = {
       <p>Baseline reflects different years depending on the dataset. Crop area baseline data are from 2020, food security baseline data are from 2010, and water risk baseline data are based on 1979 to 2019. Future projections are not available if water risk indicators without future projections have been selected (i.e., interannual variability, drought risk, groundwater table decline, and coastal eutrophication potential).</p>
       <p>In future years, select "absolute value" to see the projected water risk in the selected year. Future projections are based on business-as-usual climate change and water demand projections.</p>
     `,
-    source: 'For baseline and future water risk indicators & methodology, see <a href="https://doi.org/10.46830/writn.23.00061" target="_blank" rel="noopener noreferrer">Aqueduct 4.0</a>. For Food Security projections see <a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>.'
+    source: 'For baseline and future water risk indicators & methodology, see <a href="https://mapspam.info/data/" target="_blank" rel="noopener noreferrer">Aqueduct 4.0</a>. For Food Security projections see <a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>.'
   },
   area: {
     title: 'Area',
