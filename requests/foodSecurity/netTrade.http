@@ -1,0 +1,73 @@
+# https://api.resourcewatch.org/v1/dataset/3ba9f574-ca16-47b6-8b66-da2232aa2702/layer/f4dbccbc-0b1e-461a-a9f4-def89e0fd374
+
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+@oldDSId = cfbe4903-2aaa-47e1-b26b-70a600363f5b
+@oldLayer = 3a0eae9d-eb02-478c-8997-c8e29ce69db0
+
+@newDSId = 54685b70-138d-4b10-aabf-70c17f0579a1
+@newLayer = 1ebd2349-2d27-4c24-819b-1c0ffa159c60
+
+### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
+
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+
+### update new ds
+PATCH  {{host}}/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Net Trade",
+    "slug": "Net-Trade",
+    "application": [
+        "aqueduct"
+    ],
+    "provider": "cartodb",
+    "default": true,
+    "protected": false,
+    "published": true,
+    "env": "production",
+    "layerConfig": {
+        "type": "leaflet",
+        "params_config": [],
+        "sql_config": [
+            {
+                "key": "where",
+                "key_params": [
+                    {
+                        "key": "year",
+                        "required": true
+                    },
+                    {
+                        "key": "commodity",
+                        "required": false
+                    }
+                ]
+            }
+        ],
+        "body": {
+            "url": "https://wri-rw.carto.com/api/v2/sql?q=with s as (SELECT iso, region, value, commodity FROM combined01_prepared_2020v1 {{where}} and impactparameter='Net trade' and iso is not null and commodity <> 'All Cereals' and commodity <> 'All Pulses' ), r as (SELECT iso, region, sum(value) as value FROM s group by iso, region), d as (SELECT centroid as geometry, iso, value, region FROM impact_regions_159 t inner join r on new_region=iso) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('value',value,'country',region,'iso',iso, 'unit', 'thousand metric tons'),'type','Feature'))) as data from d",
+            "use_cors": false
+        }
+    },
+    "legendConfig": {
+        "items": [
+            {
+                "color": "rgba(28, 128, 28, 0.85)",
+                "name": "Net exporter"
+            },
+            {
+                "color": "rgba(222, 34, 57, 0.85)",
+                "name": "Net importer"
+            }
+        ],
+        "units": "thousand metric tons",
+        "description": "Crop net trade represents the amount of the crop(s) that is traded by country, where positive values indicate greater exports than imports.",
+        "type": "cluster",
+        "scenario": "SSP2-MIROC"
+    }
+}

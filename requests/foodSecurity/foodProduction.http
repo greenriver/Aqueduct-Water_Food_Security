@@ -1,0 +1,68 @@
+# https://api.resourcewatch.org/v1/dataset/db8801e4-9623-417c-bd27-7c3a8abc9070/layer/f97563e4-100b-4324-bf5a-35d71276f631
+
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+@oldDSId = b6864a7c-4711-4fd1-9e39-3eb3b36761bf
+@oldLayer = c1a06eab-84f5-47ce-97f0-fbb9f650a2be
+
+@newDSId = db8801e4-9623-417c-bd27-7c3a8abc9070
+@newLayer = f97563e4-100b-4324-bf5a-35d71276f631
+
+### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
+
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+
+### update new ds
+PATCH  {{host}}/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Food Production",
+  "slug": "Food-Production",
+  "application": [
+      "aqueduct"
+  ],
+  "provider": "cartodb",
+  "default": true,
+  "protected": false,
+  "published": true,
+  "env": "production",
+  "layerConfig": {
+      "type": "leaflet",
+      "params_config": [],
+      "sql_config": [
+          {
+              "key": "where",
+              "key_params": [
+                  {
+                      "key": "year",
+                      "required": true
+                  },
+                  {
+                      "key": "commodity",
+                      "required": false
+                  }
+              ]
+          }
+      ],
+      "body": {
+          "url": "https://wri-rw.carto.com/api/v2/sql?q=with s as (SELECT iso, region, value, commodity FROM combined01_prepared_2020v1 {{where}} and impactparameter='Production' and iso is not null and commodity <> 'All Cereals' and commodity <> 'All Pulses' ), r as (SELECT iso, region, sum(value) as value FROM s group by iso, region), d as (SELECT centroid as geometry, iso, value, region FROM impact_regions_159 t inner join r on new_region=iso) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('value',value,'country',region,'iso',iso, 'unit', 'thousand metric tons'),'type','Feature'))) as data from d",
+          "use_cors": false
+      }
+  },
+  "legendConfig": {
+      "items": [
+          {
+              "color": "rgba(53, 89, 161, 0.85)",
+              "name": "Food production"
+          }
+      ],
+      "units": "thousand metric tons",
+      "description": "Total crop production represents crop area harvested * yield, by country. Not that production represents total production of a crop, not just for human consumpion but also for livestock feed, biofuels, etc.",
+      "type": "cluster"
+  }
+}
