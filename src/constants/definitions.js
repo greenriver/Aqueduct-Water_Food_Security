@@ -3,7 +3,7 @@ export const APP_DEFINITIONS = {
     title: 'Crops',
     instructions: 'Select a single crop of interest or "all crops" to view the area where the crop(s) is grown.',
     description: '<p>"All crops" represent all of the crops that are included in the tool as displayed in the menu. The crop layers displayed on the map reflect where the harvested area exceeds 10 hectares per pixel in 2010, regardless of the timeframe selected.',
-    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a> & <a href="https://doi.org/10.1016/j.gfs.2024.100755" target="_blank" rel="noopener noreferrer">Research paper</a>'
+    source: '<a href="http://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2010</a>'
   },
   'water-risk': {
     title: 'Water Risk',
@@ -113,7 +113,7 @@ export const APP_DEFINITIONS = {
         <li>Kilocalories per person represents the availability of calories per person.</li>
         <li>Share of population at risk of hunger represents the percentage of the population at risk of suffering from malnourishment.</li>
       </ul>`,
-    source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a>'
+    source: '<a href="https://www.ifpri.org/program/impact-model" target="_blank" rel="noopener noreferrer">IFPRI IMPACT Model 2015</a> & <a href="https://doi.org/10.1016/j.gfs.2024.100755" target="_blank" rel="noopener noreferrer">Research paper</a>'
   },
   timeframe: {
     title: 'Timeframe',
