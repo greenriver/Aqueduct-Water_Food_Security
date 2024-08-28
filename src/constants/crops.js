@@ -5,6 +5,8 @@ export const CROP_COLOR_DICTIONARY = {
   'other oil crops': '#8FBC8F',
   'other pulses': '#87CEFA',
   'other roots': '#DC143C',
+  'other tropical fruit': '#FF8C00',
+  'other vegetables': '#008000',
   'pearl millet': '#FF1493',
   'pigeon pea': '#1E90FF',
   'rest of crops': '#2F4F4F',
@@ -13,7 +15,6 @@ export const CROP_COLOR_DICTIONARY = {
   'small millet': '#FF69B4',
   'sweet potato': '#8B0000',
   'temperate fruit': '#FF6347',
-  'tropical fruit': '#FF8C00',
   banana: '#FFD700',
   barley: '#DB7093',
   bean: '#00008B',
@@ -51,7 +52,6 @@ export const CROP_COLOR_DICTIONARY = {
   tea: '#CD853F',
   tobacco: '#DAA520',
   tomato: '#49b622 ',
-  vegetables: '#008000',
   wheat: '#4B0082',
   yams: '#A52A2A',
 };
@@ -79,6 +79,8 @@ export const CROP_OPTIONS = [
   { value: 'other oil crops', label: 'Other oil crops', color: CROP_COLOR_DICTIONARY['other oil crops'] },
   { value: 'other pulses', label: 'Other pulses', color: CROP_COLOR_DICTIONARY['other pulses'] },
   { value: 'other roots', label: 'Other roots', color: CROP_COLOR_DICTIONARY['other roots'] },
+  { value: 'other tropical fruit', label: 'Other Tropical fruit', color: CROP_COLOR_DICTIONARY['other tropical fruit'] },
+  { value: 'other vegetables', label: 'Other vegetables', color: CROP_COLOR_DICTIONARY['other vegetables'] },
   { value: 'pearl millet', label: 'Pearl millet', color: CROP_COLOR_DICTIONARY['pearl millet'] },
   { value: 'pigeon pea', label: 'Pigeon pea', color: CROP_COLOR_DICTIONARY['pigeon pea'] },
   { value: 'plantain', label: 'Plantain', color: CROP_COLOR_DICTIONARY.plantain },
@@ -100,8 +102,6 @@ export const CROP_OPTIONS = [
   { value: 'temperate fruit', label: 'Temperate fruit', color: CROP_COLOR_DICTIONARY['temperate fruit'] },
   { value: 'tobacco', label: 'Tobacco', color: CROP_COLOR_DICTIONARY.tobacco },
   { value: 'tomato', label: 'Tomato', color: CROP_COLOR_DICTIONARY.tomato },
-  { value: 'tropical fruit', label: 'Tropical fruit', color: CROP_COLOR_DICTIONARY['tropical fruit'] },
-  { value: 'vegetables', label: 'Vegetables', color: CROP_COLOR_DICTIONARY.vegetables },
   { value: 'wheat', label: 'Wheat', color: CROP_COLOR_DICTIONARY.wheat },
   { value: 'yams', label: 'Yams', color: CROP_COLOR_DICTIONARY.yams }
 ];
