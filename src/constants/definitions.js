@@ -2,7 +2,7 @@ export const APP_DEFINITIONS = {
   crops: {
     title: 'Crops',
     instructions: 'Select a single crop of interest or "all crops" to view the area where the crop(s) is grown.',
-    description: '<p>"All crops" represent all of the crops that are included in the tool as displayed in the menu. The crop layers displayed on the map reflect where the harvested area exceeds 10 hectares per pixel in 2010, regardless of the timeframe selected.',
+    description: '<p>"All crops" represent all of the crops that are included in the tool as displayed in the menu. The crop layers displayed on the map reflect where the harvested area exceeds 10 hectares per pixel in 2020, regardless of the timeframe selected.',
     source: '<a href="https://mapspam.info/data/" target="_blank" rel="noopener noreferrer">MapSPAM 2020</a>'
   },
   'water-risk': {
