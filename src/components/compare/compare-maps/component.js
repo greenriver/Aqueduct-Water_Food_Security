@@ -26,7 +26,7 @@ class CompareMaps extends PureComponent {
 
     this.state = {
       compareConfig: props.compareConfig,
-      loading: true
+      loading: false
     };
   }
 
