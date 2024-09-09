@@ -65,3 +65,12 @@ Authorization: {{token}}
       "type": "cluster"
   }
 }
+
+### publish
+PATCH {{host}}/v1/dataset/{{newDSId}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "published": true
+}
