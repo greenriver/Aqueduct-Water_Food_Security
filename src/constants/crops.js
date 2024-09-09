@@ -79,7 +79,7 @@ export const CROP_OPTIONS = [
   { value: 'other oil crops', label: 'Other oil crops', color: CROP_COLOR_DICTIONARY['other oil crops'] },
   { value: 'other pulses', label: 'Other pulses', color: CROP_COLOR_DICTIONARY['other pulses'] },
   { value: 'other roots', label: 'Other roots', color: CROP_COLOR_DICTIONARY['other roots'] },
-  { value: 'other tropical fruit', label: 'Other Tropical fruit', color: CROP_COLOR_DICTIONARY['other tropical fruit'] },
+  { value: 'other tropical fruit', label: 'Other tropical fruit', color: CROP_COLOR_DICTIONARY['other tropical fruit'] },
   { value: 'other vegetables', label: 'Other vegetables', color: CROP_COLOR_DICTIONARY['other vegetables'] },
   { value: 'pearl millet', label: 'Pearl millet', color: CROP_COLOR_DICTIONARY['pearl millet'] },
   { value: 'pigeon pea', label: 'Pigeon pea', color: CROP_COLOR_DICTIONARY['pigeon pea'] },
