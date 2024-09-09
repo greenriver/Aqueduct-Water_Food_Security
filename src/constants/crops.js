@@ -38,7 +38,7 @@ export const CROP_COLOR_DICTIONARY = {
   plantain: '#FFA500',
   potato: '#800000',
   pulses_leguminous: '#0000FF',
-  rapessed: '#2E8B57',
+  rapeseed: '#2E8B57',
   rice: '#800080',
   roots_tubers: '#A52A2A',
   rubber: '#808080',
