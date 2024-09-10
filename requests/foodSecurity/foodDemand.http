@@ -8,12 +8,12 @@
 @newLayer = 3be8f820-30f0-4e08-b450-b77bfc543cb8
 
 ### old
-GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}?includes=metadata
 ### old
 GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
 
 ### new
-GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}?includes=metadata
 ### new
 GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
 

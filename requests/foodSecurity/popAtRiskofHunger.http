@@ -10,8 +10,12 @@
 @newLayer = d22fba7c-2cdb-4341-9b33-1b82cfaaec4b
 
 ### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}?includes=metadata
+### old
 GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
 
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}?includes=metadata
 ### new
 GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
 

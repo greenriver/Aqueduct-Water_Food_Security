@@ -11,8 +11,12 @@ https://api.resourcewatch.org/v1/dataset/e26e348b-ce47-48c2-945c-ba7c5caf1cc0/la
 @newLayer = 24ece36f-b67a-4b71-a7a0-f6accaf630ab
 
 ### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}?includes=metadata
+### old
 GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
 
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}?includes=metadata
 ### new
 GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
 

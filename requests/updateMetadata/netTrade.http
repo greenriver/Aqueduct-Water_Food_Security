@@ -1,0 +1,34 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+
+@newDSId = 54685b70-138d-4b10-aabf-70c17f0579a1
+
+### get new dataset
+GET {{host}}/v1/dataset/{{newDSId}}
+### get metadata new
+GET {{host}}/v1/dataset/{{newDSId}}/metadata
+
+### Create dataset
+PATCH  {{host}}/v1/dataset/{{newDSId}}/metadata
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "application": "aqueduct",
+  "language": "en",
+  "description": "Crop net trade represents the amount of the selected crop(s) that is traded by country, where positive values indicate greater exports than imports.",
+  "info": {
+    "sources": [
+      {
+        "source-url": "https://cgspace.cgiar.org/items/4a89cd40-7e86-4392-88dc-464bde71a5b8",
+        "source-name": "IFPRI IMPACT Model 3.6"
+      },
+      {
+        "source-url": "https://www.sciencedirect.com/science/article/pii/S2211912424000178?via%3Dihub",
+        "source-name": "Research paper"
+      }
+    ]
+  },
+  "status": "published"
+}
