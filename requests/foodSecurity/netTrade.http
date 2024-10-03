@@ -71,8 +71,7 @@ Authorization: {{token}}
         ],
         "units": "thousand metric tons",
         "description": "Crop net trade represents the amount of the crop(s) that is traded by country, where positive values indicate greater exports than imports.",
-        "type": "cluster",
-        "scenario": "SSP2-MIROC"
+        "type": "cluster"
     }
 }
 
