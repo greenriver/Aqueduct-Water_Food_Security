@@ -26,30 +26,30 @@ export const SQL_CONFIG = [
 ];
 
 export const URL = `https://wri-rw.carto.com/api/v2/sql?q=
-    with a as (SELECT * FROM crops_risk_rankings
+    with a as (SELECT * FROM crops_risk_rankings_2020v1r0
                WHERE irrigation='irrigated' AND indicator='water_stress' {{and}} and value is not null
                ORDER BY iso asc),
          b as (SELECT *
-               FROM crops_risk_rankings
+               FROM crops_risk_rankings_2020v1r0
                WHERE irrigation='rainfed' AND indicator='drought_risk' {{and}} and value is not null
                ORDER BY iso asc)
 
 
     SELECT 'Area' as name, sum(area) as value, null as label
-    FROM crops_risk_stats
+    FROM crop_risk_stats_2020v1r0
     WHERE indicator='water_stress' {{and1}}
 
     UNION ALL
 
     SELECT 'Yield' as name, sum(prod)/sum(area) as value, null as label
-    FROM crops_risk_stats
+    FROM crop_risk_stats_2020v1r0
     WHERE indicator='water_stress' {{and1}}
 
     UNION ALL
 
     SELECT impactparameter AS name, sum(value) AS value, null as label
-    FROM combined01_prepared_new
-    WHERE impactparameter in ('Share Pop. at risk of hunger') and scenario = 'SSP2-MIRO' {{and2}}
+    FROM combined01_prepared_new_2020v1
+    WHERE impactparameter in ('Share Pop. at risk of hunger') {{and2}}
     GROUP BY impactparameter
 
     UNION ALL

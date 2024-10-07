@@ -1,3 +1,4 @@
+const fs = require('fs');
 const axios = require('axios');
 
 const instance = axios.create({
@@ -10,6 +11,13 @@ const getDatasetLayers = async (dataset) => {
   // console.log(data.data.attributes);
   const layerIds = data.data.attributes.layer.map(({ id, attributes }) => ({ id, slug: attributes.slug, dataset: attributes.dataset }));
   console.table(layerIds);
+};
+
+const getDataset = async (dataset) => {
+  const { data } = await instance.get(`/v1/dataset/${dataset}?includes=metadata`);
+  // console.log(data.data);
+  // console.log(JSON.stringify(data.data, null, 4));
+  return data;
 };
 
 const printLayer = async (layerId) => {
@@ -51,39 +59,205 @@ const getDatasetPayload = async (dataset) => {
   console.log(JSON.stringify(cleanedDataset, null, 4));
 };
 
+const cleanMetadata = metadata => ({
+  type: 'metadata',
+  attributes: {
+    application: metadata.attributes.application,
+    language: 'en',
+    description: metadata.attributes.description,
+    info: metadata.attributes.info,
+    status: metadata.attributes.status
+  }
+});
+
+const getMetadata = async (dataset) => {
+  const { data } = await instance.get(`/v1/dataset/${dataset}?includes=metadata`);
+
+  const metadata = data.data.attributes.metadata[0];
+  if (!metadata) throw new Error(`there is not metadata ${dataset}`);
+
+  // const cleanMeta = cleanMetadata(metadata);
+
+  console.log(JSON.stringify(metadata, null, 4));
+  return metadata;
+};
+
+const copyMetadata = async (sourceDS, targetDS) => {
+  const cleanMeta = cleanMetadata(await getMetadata(sourceDS));
+  console.log(JSON.stringify(cleanMeta, null, 4));
+
+  try {
+    const res = await instance.post(`/v1/dataset/${targetDS}/metadata`, cleanMeta.attributes);
+    console.log(res.data);
+  } catch (e) {
+    console.log(e.response.data);
+  }
+};
+
+// Metadata
+const getWidgetById = async (metadataId) => {
+  const { data } = await instance.get(`/v1/widget/${metadataId}`);
+
+  console.log(JSON.stringify(data.data.attributes.widgetConfig.data[0].url, null, 4));
+
+  try {
+    fs.writeFileSync(`requests/widgets/${metadataId}.json`, JSON.stringify(data.data.attributes, null, 2));
+    // file written successfully
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const updateWidgetFromFile = async (metadataId) => {
+  const widget = JSON.parse(fs.readFileSync(`requests/widgets/${metadataId}.json`, 'utf8'));
+
+  // console.log(JSON.stringify(widget, null, 4));
+
+  widget.widgetConfig.data[0].url = "https://wri-rw.carto.com/api/v2/sql?q= SELECT impactparameter AS name, sum(value)*1000 AS y FROM combined01_prepared_new_2020v1 WHERE impactparameter in ('Food Demand', 'Production', 'Net trade') and commodity<>'All Cereals' and commodity<>'All Pulses' {{and}} group by impactparameter";
+
+  console.log(JSON.stringify(widget.widgetConfig.data[0].url, null, 4));
+
+  try {
+    const res = await instance.patch(`/v1/widget/${metadataId}`, widget);
+    console.log(res.status);
+  } catch (e) {
+    console.log(e.response.data);
+  }
+};
+
+// Layer
+const getLayerById = async (layerId) => {
+  const { data } = await instance.get(`/v1/layer/${layerId}`);
+  const datasetId = data.data.attributes.dataset;
+
+  console.log(JSON.stringify(data.data.attributes.legendConfig.sql_query, null, 4));
+
+  try {
+    fs.writeFileSync(`requests/layers/${layerId}.json`, JSON.stringify(data.data.attributes, null, 2));
+    // file written successfully
+    return { layerId, datasetId };
+  } catch (err) {
+    console.error(err);
+    return { layerId, datasetId };
+  }
+};
+
+const updateLayerFromFile = async (datasetId, layerId) => {
+  const layer = JSON.parse(fs.readFileSync(`requests/layers/${layerId}.json`, 'utf8'));
+
+  // console.log(JSON.stringify(layer.legendConfig.sql_query, null, 4));
+
+  layer.legendConfig.sql_query = 'select array_agg(bucket::numeric) as bucket from (select json_array_elements(bucket::json)::text as bucket FROM crop_buckets_v2_2020v1r0 {{where}}) s';
+
+
+  console.log('******************************************');
+  console.log(JSON.stringify(layer.legendConfig.sql_query, null, 4));
+
+
+  try {
+    const res = await instance.patch(`/v1/dataset/${datasetId}/layer/${layerId}`, layer);
+    console.log(res.status);
+  } catch (e) {
+    console.log(e.response.data);
+  }
+};
+
+const getMetadataByWidgetId = async (widgetId) => {
+  const { data } = await instance.get(`/v1/widget/${widgetId}`);
+  const datasetId = data.data.attributes.dataset;
+  const dataset = await getDataset(datasetId);
+  const metadataId = dataset.data.attributes.metadata[0].id;
+
+  // console.log(JSON.stringify(dataset.data.attributes.metadata[0], null, 4));
+  console.log({ count: dataset.data.attributes.metadata.length });
+  const metadata = dataset.data.attributes.metadata[0].attributes;
+
+  console.log(JSON.stringify(metadata.description, null, 4));
+  console.log(JSON.stringify(metadata.info, null, 4));
+
+  try {
+    fs.writeFileSync(`requests/metadata/${metadataId}.json`, JSON.stringify(metadata, null, 2));
+    // file written successfully
+    return { metadataId, datasetId };
+  } catch (err) {
+    console.error(err);
+    return { metadataId, datasetId };
+  }
+};
+
+const updateMetadataFromFile = async (datasetId, metadataId) => {
+  const metadata = JSON.parse(fs.readFileSync(`requests/metadata/${metadataId}.json`, 'utf8'));
+
+  console.log(JSON.stringify(metadata.description, null, 4));
+  console.log(JSON.stringify(metadata.info, null, 4));
+
+  metadata.description = 'This figure displays annual domestic production, demand for food, and net trade for the crop and timeframe selected.';
+
+  metadata.info.sources = [
+    // {
+    //   'source-url': 'https://doi.org/10.46830/writn.23.00061',
+    //   'source-name': 'Aqueduct 4.0'
+    // },
+    // {
+    //   'source-url': 'https://mapspam.info/data/',
+    //   'source-name': 'MapSPAM 2020'
+    // },
+    {
+      'source-url': 'https://hdl.handle.net/10568/148953',
+      'source-name': 'IFPRI IMPACT Model 3.6'
+    },
+    {
+      'source-url': 'https://doi.org/10.1016/j.gfs.2024.100755',
+      'source-name': 'Research paper'
+    }
+  ];
+
+  // metadata.info.units = '2019 USD/mt';
+  // metadata.info.resolution = 'global';
+  // delete metadata.info.scenario;
+
+  console.log('******************************************');
+  console.log(JSON.stringify(metadata.description, null, 4));
+  console.log(JSON.stringify(metadata.info, null, 4));
+
+  try {
+    const res = await instance.patch(`/v1/dataset/${datasetId}/metadata`, metadata);
+    console.log(res.status);
+  } catch (e) {
+    console.log(e.response.data);
+  }
+};
+
 
 (async () => {
-  // main();
-  // getDatasetLayers('4a2b250e-25ab-4da3-9b83-dc318995eee1');
+  // UPDATE METADATA //
+  const widgetId = '5c9336fa-955d-4dcf-b7a8-c871c5f49b01';
+  const { metadataId, datasetId } = await getMetadataByWidgetId(widgetId);
 
-  // water baseline
-  // getDatasetLayers('113258c9-14fc-4624-8b5c-76b064ac1ae9');
+  console.log({ metadataId, datasetId });
+  if (process.argv[2] === 'write') {
+    console.log('****** WRITING ******');
+    await updateMetadataFromFile(datasetId, metadataId);
+  }
 
-  // new water baseline
-  // getDatasetLayers('979e6a3e-3905-401f-ab81-cd83c5c50c6c');
+  // UPDATE WIDGET //
+  // const widgetId = 'c0de6729-7ca5-4c0b-ab23-e04b97659e26';
 
-  // water stress
-  // printLayer('8074ac9b-9cca-4aaf-a112-26166a8e9c7d');
-  // printLayer('160be93f-8c21-428a-b4c7-214b7ea4232d');
-  // printLayer('b687f3e4-e362-4a8d-9a69-a610710efd6b');
-  // printLayer('1c149343-fae5-4c2d-a6d4-60f988866d89');
-  // printLayer('0eb346f7-83eb-4919-b032-8bc9957d2c2a');
-  // printLayer('7520db69-3cf2-42ba-a0ee-5ee37b3085db');
-  // printLayer('23662aa6-cb2a-4e46-9be8-4a2d617f26c9');
-  // printLayer('11a98f9a-c03c-4757-b144-c2a78757f281');
-  // printLayer('3c3d5714-1200-4af1-b7c9-e1e01402319e');
+  // await getWidgetById(widgetId);
 
-  // ----------------------------------------------
+  // if (process.argv[2] === 'write') {
+  //   console.log('****** WRITING ******');
+  //   await updateWidgetFromFile(widgetId);
+  // }
 
-  // getDatasetLayers('3cca5144-63d2-4ddb-af53-094603b702f3');
-  // await getDatasetLayers('6880e51c-fda2-4de5-8456-e981d548853a');
-  // await getDatasetLayers('b6864a7c-4711-4fd1-9e39-3eb3b36761bf');
-  // await getDatasetLayers('cfbe4903-2aaa-47e1-b26b-70a600363f5b');
-  // await getDatasetLayers('c6d487f0-42ad-4513-ac99-108d4c51dab1');
-  // await getDatasetLayers('57748f05-aa1d-476f-9044-9ae9ca8a09c5');
-  // await getDatasetLayers('ea9dacf1-c11e-4e6a-ad63-8804111a75ba');
-  // await getDatasetLayers('3cca5144-63d2-4ddb-af53-094603b702f3');
-  // await printLayer('6f339b41-ea2f-4502-a454-d03bb22b540b');
-  // await getDatasetPayload('3cca5144-63d2-4ddb-af53-094603b702f3');
-  await getDatasetLayers('1ab7ce3e-a8b4-45d4-b136-7f6015662a09');
+
+  // UPDATE LAYER //
+  // const layerId = '383f2ae6-6925-49e8-9e56-e5a84b38fd4a';
+
+  // const { datasetId } = await getLayerById(layerId);
+
+  // if (process.argv[2] === 'write') {
+  //   console.log('****** WRITING ******');
+  //   await updateLayerFromFile(datasetId, layerId);
+  // }
 })();
