@@ -10,7 +10,7 @@ import StickyFilters from 'components/filters/sticky';
 import WidgetList from 'components/widgets/widget-list';
 import Analyzer from 'components/analyzer';
 import Summary from 'components/summary';
-import NewUpdates from '../../../new-updates';
+// import NewUpdates from '../../../new-updates';
 // import DownloadMapControl from 'components/map/map-controls/download-map';
 
 class MapPageDesktop extends PureComponent {
@@ -47,7 +47,6 @@ class MapPageDesktop extends PureComponent {
 
     return (
       <div className="l-map -fullscreen">
-        <NewUpdates />
         {/* Sidebar */}
         <Sidebar>
           {/* Filters */}
