@@ -130,7 +130,8 @@ const getLayerById = async (layerId) => {
   const { data } = await instance.get(`/v1/layer/${layerId}`);
   const datasetId = data.data.attributes.dataset;
 
-  console.log(JSON.stringify(data.data.attributes.legendConfig.sql_query, null, 4));
+  console.log(JSON.stringify(data.data.attributes.layerConfig.body.layers[1].options.sql, null, 4));
+  console.log(JSON.stringify(data.data.attributes.layerConfig.body.layers[1].options.cartocss, null, 4));
 
   try {
     fs.writeFileSync(`requests/layers/${layerId}.json`, JSON.stringify(data.data.attributes, null, 2));
@@ -145,13 +146,13 @@ const getLayerById = async (layerId) => {
 const updateLayerFromFile = async (datasetId, layerId) => {
   const layer = JSON.parse(fs.readFileSync(`requests/layers/${layerId}.json`, 'utf8'));
 
-  // console.log(JSON.stringify(layer.legendConfig.sql_query, null, 4));
-
-  layer.legendConfig.sql_query = 'select array_agg(bucket::numeric) as bucket from (select json_array_elements(bucket::json)::text as bucket FROM crop_buckets_v2_2020v1r0 {{where}}) s';
+  layer.layerConfig.body.layers[1].options.cartocss = '#layer{polygon-fill: #FF6600; polygon-opacity: 1; line-color: #FF6600; line-width: 0.5; line-opacity: 1; comp-op: dst-in;}';
+  layer.layerConfig.body.layers[1].options.sql = 'SELECT cartodb_id, the_geom_webmercator FROM crop_baseline_2020v1r1 {{where}}';
 
 
   console.log('******************************************');
-  console.log(JSON.stringify(layer.legendConfig.sql_query, null, 4));
+  console.log(JSON.stringify(layer.layerConfig.body.layers[0].options.sql, null, 4));
+  console.log(JSON.stringify(layer.layerConfig.body.layers[0].options.cartocss, null, 4));
 
 
   try {
@@ -231,14 +232,14 @@ const updateMetadataFromFile = async (datasetId, metadataId) => {
 
 (async () => {
   // UPDATE METADATA //
-  const widgetId = '5c9336fa-955d-4dcf-b7a8-c871c5f49b01';
-  const { metadataId, datasetId } = await getMetadataByWidgetId(widgetId);
+  // const widgetId = '5c9336fa-955d-4dcf-b7a8-c871c5f49b01';
+  // const { metadataId, datasetId } = await getMetadataByWidgetId(widgetId);
 
-  console.log({ metadataId, datasetId });
-  if (process.argv[2] === 'write') {
-    console.log('****** WRITING ******');
-    await updateMetadataFromFile(datasetId, metadataId);
-  }
+  // console.log({ metadataId, datasetId });
+  // if (process.argv[2] === 'write') {
+  //   console.log('****** WRITING ******');
+  //   await updateMetadataFromFile(datasetId, metadataId);
+  // }
 
   // UPDATE WIDGET //
   // const widgetId = 'c0de6729-7ca5-4c0b-ab23-e04b97659e26';
@@ -252,12 +253,12 @@ const updateMetadataFromFile = async (datasetId, metadataId) => {
 
 
   // UPDATE LAYER //
-  // const layerId = '383f2ae6-6925-49e8-9e56-e5a84b38fd4a';
+  const layerId = '606023da-06d0-4fa2-8784-c4901c7d167e';
 
-  // const { datasetId } = await getLayerById(layerId);
+  const { datasetId } = await getLayerById(layerId);
 
-  // if (process.argv[2] === 'write') {
-  //   console.log('****** WRITING ******');
-  //   await updateLayerFromFile(datasetId, layerId);
-  // }
+  if (process.argv[2] === 'write') {
+    console.log('****** WRITING ******');
+    await updateLayerFromFile(datasetId, layerId);
+  }
 })();
