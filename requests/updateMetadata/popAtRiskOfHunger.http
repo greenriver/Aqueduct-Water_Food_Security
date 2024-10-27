@@ -21,8 +21,8 @@ Authorization: {{token}}
   "info": {
     "sources": [
       {
-        "source-url": "https://cgspace.cgiar.org/items/4a89cd40-7e86-4392-88dc-464bde71a5b8",
-        "source-name": "IFPRI IMPACT Model 3.6"
+        "source-url": "https://ebrary.ifpri.org/digital/collection/p15738coll2/id/129825/",
+        "source-name": "IFPRI IMPACT Model 3.4"
       },
       {
         "source-url": "https://www.sciencedirect.com/science/article/pii/S2211912424000178?via%3Dihub",
