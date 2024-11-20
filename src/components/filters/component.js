@@ -290,8 +290,7 @@ class Filters extends PureComponent {
             />
           )}
         >
-          {/* UNCOMMENT IF WE WANT HEADER */}
-          {/* {withScope && filters.scope === 'supply_chain' && (
+          {withScope && filters.scope === 'supply_chain' && (
             <div className="filters-section">
               <h2>Supply Chain</h2>
               <p>
@@ -308,7 +307,7 @@ class Filters extends PureComponent {
                 </button>
               </p>
             </div>
-          )} */}
+          )}
           <div>
             {withScope && filters.scope === 'country'
               && (
