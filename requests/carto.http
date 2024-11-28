@@ -1,0 +1,17 @@
+### old
+https://wri-rw.carto.com:443/api/v2/sql?q=select DISTINCT label from "wri-rw".water_risk_indicators_projections WHERE indicator = 'water_stress' AND type = 'future_value'
+### count
+https://wri-rw.carto.com:443/api/v2/sql?q=select count(*) from "wri-rw".water_risk_indicators_projections WHERE indicator = 'water_stress' AND type = 'future_value'
+
+
+
+### new
+https://wri-rw.carto.com:443/api/v2/sql?q=select DISTINCT label from "wri-rw".water_risk_indicators_future_aqueduct40 WHERE indicator = 'water_stress' AND type = 'future_value'
+### new
+https://wri-rw.carto.com:443/api/v2/sql?q=select DISTINCT year from "wri-rw".water_risk_indicators_future_aqueduct40 WHERE indicator = 'water_stress' AND type = 'future_value'
+### new
+https://wri-rw.carto.com:443/api/v2/sql?q=select DISTINCT year from "wri-rw".water_risk_indicators_future_aqueduct40 WHERE indicator = 'seasonal_variability' AND type = 'future_value'
+
+### count
+https://wri-rw.carto.com:443/api/v2/sql?q=select count(*) from "wri-rw".water_risk_indicators_future_aqueduct40 WHERE indicator = 'water_stress' AND type = 'future_value'
+

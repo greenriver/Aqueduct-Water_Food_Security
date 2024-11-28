@@ -1,0 +1,67 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+### get dataset Water risk baseline
+GET {{host}}/v1/dataset/113258c9-14fc-4624-8b5c-76b064ac1ae9
+### get dataset including layers
+GET {{host}}/v1/dataset/113258c9-14fc-4624-8b5c-76b064ac1ae9?includes=layer
+
+### Create dataset
+POST {{host}}/v1/dataset
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "dataset": {
+    "name":"Water Risk Baseline",
+    "connectorType":"rest",
+    "provider":"cartodb",
+    "connectorUrl": "https://wri-rw.carto.com/tables/crops_baseline/public",
+    "application":[
+      "aqueduct"
+    ]
+  }
+}
+
+### new dataset
+GET {{host}}/v1/dataset/979e6a3e-3905-401f-ab81-cd83c5c50c6c
+### new dataset
+GET {{host}}/v1/dataset/979e6a3e-3905-401f-ab81-cd83c5c50c6c?includes=layer
+
+# dataset: 113258c9-14fc-4624-8b5c-76b064ac1ae9
+# ┌─────────┬────────────────────────────────────────┬────────────────────────────────────┐
+# │ (index) │                   id                   │                slug                │
+# ├─────────┼────────────────────────────────────────┼────────────────────────────────────┤
+# │    0    │ '8074ac9b-9cca-4aaf-a112-26166a8e9c7d' │           'Water-Stress'           │
+# │    1    │ '160be93f-8c21-428a-b4c7-214b7ea4232d' │         'Water-Depletion'          │
+# │    2    │ 'b687f3e4-e362-4a8d-9a69-a610710efd6b' │    'Groundwater-Table-Decline'     │
+# │    3    │ '1c149343-fae5-4c2d-a6d4-60f988866d89' │     'Interannual-Variability'      │
+# │    4    │ '0eb346f7-83eb-4919-b032-8bc9957d2c2a' │       'Seasonal-Variability'       │
+# │    5    │ '7520db69-3cf2-42ba-a0ee-5ee37b3085db' │           'Drought-Risk'           │
+# │    6    │ 'b47dd736-f936-4f8c-88c1-22b9e2b5146b' │       'Riverine-Flood-Risk'        │ <---->
+# │    7    │ '6a6ae3a9-130b-4477-a517-eaf58a2cb334' │        'Coastal-Flood-Risk'        │ <---->
+# │    8    │ 'a33ae2ca-a82b-40e1-a642-c61c7b9e6a42' │  'Untreated-Collected-Wastewater'  │ <---->
+# │    9    │ '23662aa6-cb2a-4e46-9be8-4a2d617f26c9' │ 'Coastal-Eutrophication-Potential' │ 
+# │   10    │ '11a98f9a-c03c-4757-b144-c2a78757f281' │   'Unimprovedno-drinking-water'    │
+# │   11    │ '3c3d5714-1200-4af1-b7c9-e1e01402319e' │     'Unimprovedno-sanitation'      │
+# │   12    │ '270cf7b1-e08a-427b-b220-0a0d090e2843' │          'RepRisk-Index'           │ <---->
+# └─────────┴────────────────────────────────────────┴────────────────────────────────────┘
+
+###
+
+### new ids
+
+# dataset: 979e6a3e-3905-401f-ab81-cd83c5c50c6c
+# ┌─────────┬────────────────────────────────────────┬──────────────────────────────────────┐
+# │ (index) │                   id                   │                 slug                 │
+# ├─────────┼────────────────────────────────────────┼──────────────────────────────────────┤
+# │    0    │ '8a0b596b-9b08-49ba-b636-2b1cd99b75a4' │           'Water-Stress_1'           │
+# │    1    │ '3fcd9748-3d11-42f9-959e-03643525243c' │         'Water-Depletion_1'          │
+# │    2    │ '7d721181-7b8a-463a-a7cf-c8f43ef316e2' │     'Interannual-Variability_1'      │
+# │    3    │ '6a759294-e29d-41a7-892d-6ce670b2ec57' │       'Seasonal-Variability_1'       │
+# │    4    │ '2b333ecc-6df6-493a-95c8-83a57badc597' │           'Drought-Risk_1'           │
+# │    5    │ '74fa50e4-7fd7-47db-883c-59055ace451b' │    'Groundwater-Table-Decline_1'     │
+# │    6    │ '66654e5d-4263-4d3d-967e-7c351ac9ef40' │ 'Coastal-Eutrophication-Potential_1' │
+# │    7    │ '081a2763-fe5b-461b-8890-a93c7ec124e7' │   'Unimprovedno-drinking-water_1'    │
+# │    8    │ '4dfb3131-9d8e-4ece-8ad2-58b4adafeb40' │     'Unimprovedno-sanitation_1'      │
+# └─────────┴────────────────────────────────────────┴──────────────────────────────────────┘

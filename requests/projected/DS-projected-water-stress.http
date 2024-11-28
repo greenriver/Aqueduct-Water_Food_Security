@@ -1,0 +1,50 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+
+### get projected dataset
+GET {{host}}/v1/dataset/3cca5144-63d2-4ddb-af53-094603b702f3
+### get crops dataset and check it has four layers
+GET {{host}}/v1/dataset/3cca5144-63d2-4ddb-af53-094603b702f3?includes=layer,metadata
+
+#### OLD TABLE
+# ┌─────────┬────────────────────────────────────────┬──────────────────────────────────────────────┬────────────────────────────────────────┐
+# │ (index) │                   id                   │                     slug                     │                dataset                 │
+# ├─────────┼────────────────────────────────────────┼──────────────────────────────────────────────┼────────────────────────────────────────┤
+# │    0    │ '6f339b41-ea2f-4502-a454-d03bb22b540b' │          'Projected-Water-Stress_1'          │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    1    │ '81b95d4d-2814-41b7-a425-49cfc1625f5e' │      'Projected-Seasonal-Variability_1'      │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    2    │ 'd48cf5e5-8692-4096-a711-4604f9be163c' │     'Projected-Change-in-Water-Stress_1'     │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# │    3    │ '3bcc184d-c7e0-4099-ba5f-b7dbdbd4ac31' │ 'Projected-Change-in-Seasonal-Variability_1' │ '3cca5144-63d2-4ddb-af53-094603b702f3' │
+# └─────────┴────────────────────────────────────────┴──────────────────────────────────────────────┴────────────────────────────────────────┘
+
+### Create dataset
+POST {{host}}/v1/dataset
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "dataset": {
+    "name": "Water Risk Projected",
+    "connectorType": "rest",
+    "provider": "cartodb",
+    "connectorUrl": "https://wri-rw.carto.com/tables/crops_projected/public",
+    "application": [
+        "aqueduct"
+    ]
+  }
+}
+
+
+#### NEW TABLE
+# ┌─────────┬────────────────────────────────────────┬────────────────────────────────────┬────────────────────────────────────────┐
+# │ (index) │                   id                   │                slug                │                dataset                 │
+# ├─────────┼────────────────────────────────────────┼────────────────────────────────────┼────────────────────────────────────────┤
+# │    0    │ '606023da-06d0-4fa2-8784-c4901c7d167e' │ 'Projected-Seasonal-Variability_3' │ '1ab7ce3e-a8b4-45d4-b136-7f6015662a09' │
+# │    1    │ '9eece26c-d5b0-4209-adbb-f5a75938e9b0' │     'Projected-Water-Stress_3'     │ '1ab7ce3e-a8b4-45d4-b136-7f6015662a09' │
+# └─────────┴────────────────────────────────────────┴────────────────────────────────────┴────────────────────────────────────────┘
+
+### new dataset
+GET {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09
+### new dataset
+GET {{host}}/v1/dataset/1ab7ce3e-a8b4-45d4-b136-7f6015662a09?includes=layer
+

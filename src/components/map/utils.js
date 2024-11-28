@@ -1,15 +1,21 @@
 import { WATER_INDICATORS_METADATA } from './constants';
 
 export const parseMetadataLayer = (layer = {}) => {
-  if (layer.dataset === '113258c9-14fc-4624-8b5c-76b064ac1ae9' || layer.dataset === '3cca5144-63d2-4ddb-af53-094603b702f3') {
-    const { description, sources } = WATER_INDICATORS_METADATA[layer.slug];
+  if (layer.dataset === '979e6a3e-3905-401f-ab81-cd83c5c50c6c' || layer.dataset === '1ab7ce3e-a8b4-45d4-b136-7f6015662a09') {
+    let { slug } = layer;
+    if (['_1', '_2', '_3'].includes(slug.slice(slug.length - 2))) {
+      slug = slug.slice(0, slug.length - 2);
+    }
+
+    const { description, sources } = WATER_INDICATORS_METADATA[slug];
+
     return ({
       ...layer,
       metadata: {
         ...layer.metadata,
         ...description && { description },
         info: {
-          ...layer.metadata.info,
+          ...layer?.metadata?.info && { info: layer.metadata.info },
           ...sources && { sources }
         }
       }

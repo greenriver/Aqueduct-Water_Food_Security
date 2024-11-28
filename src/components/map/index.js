@@ -32,10 +32,10 @@ export default connect(
     parametrization: state.map.parametrization
   }),
   dispatch => ({
-    setMapLocation,
+    setMapLocation: (props) => { dispatch(setMapLocation(props)); },
     toggleModal: (bool, { childrenProps, children }) => {
       dispatch(toggleModal(bool, { children, childrenProps: parseMetadataLayer(childrenProps) }));
     },
-    setLayerParametrization
+    setLayerParametrization: (props) => { dispatch(setLayerParametrization(props)); }
   })
 )(Map);

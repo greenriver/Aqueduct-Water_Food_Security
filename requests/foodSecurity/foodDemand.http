@@ -1,0 +1,81 @@
+@host = https://api.resourcewatch.org
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzcwOTBiZTU5MTU5NmYyN2MxOThjYSIsInJvbGUiOiJBRE1JTiIsInByb3ZpZGVyIjoibG9jYWwiLCJlbWFpbCI6IkNhcmxvcy5EZWxSZWFsLjVAd3JpY29uc3VsdGFudC5vcmciLCJleHRyYVVzZXJEYXRhIjp7ImFwcHMiOlsicnciLCJhcXVlZHVjdCIsImFxdWVkdWN0LXdhdGVyLXJpc2siXX0sImNyZWF0ZWRBdCI6MTY4Njc3NTUyNTAyNSwicGhvdG8iOiJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vd3JpLWFwaS1iYWNrdXBzL3Jlc291cmNld2F0Y2gvc3RhZ2luZy9wcm9maWxlcy9hdmF0YXJzLzAwMC8wMDAvMjU4L29yaWdpbmFsL2RhdGE_MTY3NDA2ODA0NyIsIm5hbWUiOiJDYXJsb3MgRGVsIFJlYWwiLCJpYXQiOjE2ODY3NzU1MjV9.3J7HR6Et_5wmJbbfjnh_7ZvrClzIsRAdwaqMJEMmOuM
+
+@oldDSId = 6880e51c-fda2-4de5-8456-e981d548853a
+@oldLayer = e41613c3-32ee-45e9-b3fe-8685b289cb8e
+
+@newDSId = c4fa0841-a0c6-44bd-a047-a93fc752a8f0
+@newLayer = 3be8f820-30f0-4e08-b450-b77bfc543cb8
+
+### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}?includes=metadata
+### old
+GET https://api.resourcewatch.org/v1/dataset/{{oldDSId}}/layer/{{oldLayer}}
+
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}?includes=metadata
+### new
+GET https://api.resourcewatch.org/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+
+### update new ds
+PATCH  {{host}}/v1/dataset/{{newDSId}}/layer/{{newLayer}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "Food Demand",
+  "slug": "Food-Demand",
+  "application": [
+      "aqueduct"
+  ],
+  "provider": "cartodb",
+  "default": true,
+  "protected": false,
+  "published": true,
+  "env": "production",
+  "layerConfig": {
+      "type": "leaflet",
+      "params_config": [],
+      "sql_config": [
+          {
+              "key": "where",
+              "key_params": [
+                  {
+                      "key": "year",
+                      "required": true
+                  },
+                  {
+                      "key": "commodity",
+                      "required": false
+                  }
+              ]
+          }
+      ],
+      "body": {
+          "url": "https://wri-rw.carto.com/api/v2/sql?q=with s as (SELECT iso, region, value, commodity FROM combined01_prepared_2020v1 {{where}} and impactparameter='Food Demand' and iso is not null and commodity <> 'All Cereals' and commodity <> 'All Pulses' ), r as (SELECT iso, region, sum(value) as value FROM s group by iso, region), d as (SELECT centroid as geometry, iso, value, region FROM impact_regions_159 t inner join r on new_region=iso) select json_build_object('type','FeatureCollection','features',json_agg(json_build_object('geometry',cast(geometry as json),'properties', json_build_object('value',value,'country',region,'iso',iso, 'unit', 'thousand metric tons'),'type','Feature'))) as data from d",
+          "use_cors": false
+      }
+  },
+  "legendConfig": {
+      "items": [
+          {
+              "color": "rgba(53, 89, 161, 0.85)",
+              "name": "Food demand"
+          }
+      ],
+      "units": "thousand metric tons",
+      "description": "Food demand for crop represents the demand for, or availability of, food in the domestic sector, by country.",
+      "type": "cluster"
+  }
+}
+
+### publish
+PATCH {{host}}/v1/dataset/{{newDSId}}
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "published": true,
+    "connectorUrl": "https://resourcewatch.carto.com/u/wri-rw/tables/combined01_prepared_2020v1/public",
+    "tableName": "combined01_prepared_2020v1"
+}

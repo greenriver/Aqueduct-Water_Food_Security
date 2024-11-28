@@ -20,7 +20,7 @@ FOOD_OPTIONS.unshift({
 export const SCOPE_OPTIONS = [
   { value: 'global', label: 'Global' },
   { value: 'country', label: 'Country' },
-  { value: 'supply_chain', label: 'Supply Chain' }
+  // { value: 'supply_chain', label: 'Supply Chain' }
 ];
 
 export const CATEGORIES = {
@@ -32,7 +32,7 @@ export const CATEGORIES = {
 export const YEAR_OPTIONS = [
   { value: 'baseline', label: 'Baseline' },
   { value: '2030', label: '2030' },
-  { value: '2040', label: '2040' }
+  { value: '2050', label: '2050' }
 ];
 
 export const DATA_TYPE_OPTIONS = [

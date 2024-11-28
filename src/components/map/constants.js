@@ -144,7 +144,7 @@ export const WATER_INDICATORS_METADATA = {
     ]
   },
   // Future projections
-  'Projected-Water-Stress_1': {
+  'Projected-Water-Stress': {
     description: 'Water stress is an indicator of competition for water resources and is defined informally as the ratio of demand for water by human society divided by available water.',
     sources: [
       {
@@ -153,7 +153,7 @@ export const WATER_INDICATORS_METADATA = {
       }
     ]
   },
-  'Projected-Seasonal-Variability_1': {
+  'Projected-Seasonal-Variability': {
     description: 'Water stress measures the ratio of total water withdrawals to available renewable surface and groundwater supplies. Water withdrawals include domestic, industrial, irrigation, and livestock consumptive and nonconsumptive uses. Available renewable water supplies include the impact of upstream consumptive water users and large dams on downstream water availability. Higher values indicate more competition among users.',
     sources: [
       {

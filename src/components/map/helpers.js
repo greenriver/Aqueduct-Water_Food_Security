@@ -97,11 +97,11 @@ export const prepareMarkerLayer = async (_layer = {}, _params = {}, _zoom) => {
 
   let params = _params;
 
-  // changes baseline for 2010
+  // changes baseline for 2020
   if (_params.year === 'baseline') {
     params = {
       ..._params,
-      year: 2010
+      year: 2020
     };
   }
 

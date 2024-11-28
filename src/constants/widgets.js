@@ -10,7 +10,7 @@ export const WIDGET_DICTIONARY = {
   },
   food: {
     yearOptions: {
-      baseline: 2010,
+      baseline: 2020,
       2020: 2020,
       2030: 2030,
       2040: 2040,
@@ -19,18 +19,20 @@ export const WIDGET_DICTIONARY = {
   },
   'widget-2010': {
     yearOptions: {
-      baseline: 2010,
+      baseline: 2020,
       2020: 2020,
       2030: 2030,
-      2040: 2040
+      2040: 2040,
+      2050: 2050,
     }
   },
   'widget-2014': {
     yearOptions: {
-      baseline: 2014,
+      baseline: 2020,
       2020: 2020,
       2030: 2030,
-      2040: 2040
+      2040: 2040,
+      2050: 2050,
     }
   }
 };
