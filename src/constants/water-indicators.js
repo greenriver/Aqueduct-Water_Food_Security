@@ -685,6 +685,7 @@ export const DEFAULT_BASELINE_WATER_INDICATOR = IDS.bws.baseline;
 export const DEFAULT_PROJECTED_WATER_INDICATOR = IDS.bws.projectedAbsolute;
 
 export const ALLOWED_PROJECTED_WATER_INDICATORS = [
+  'none',
   IDS.bws.baseline,
   IDS.sev.baseline,
   IDS.bws.projectedAbsolute,
