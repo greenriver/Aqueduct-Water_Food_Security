@@ -176,7 +176,7 @@ class Filters extends PureComponent {
       setLayerParametrization,
       resetFilters
     } = this.props;
-    const disablesTimeline = !filters.indicator || filters.indicator === 'none';
+    const disablesTimeline = !filters.indicator;
     const componentClass = classnames('c-filters', { [className]: !!className });
     const indicator = this.getIndicator();
 
