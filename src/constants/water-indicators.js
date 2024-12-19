@@ -665,6 +665,7 @@ export const PROJECTED_WATER_INDICATORS_IDS = [...PROJECTED_WATER_INDICATORS_ABS
 export const EQUIVALENCE_WATER_INDICATORS = {
   // water stress - baseline / projected
   '': IDS.bws.projectedAbsolute,
+  [IDS.bws.baseline]: IDS.bws.projectedAbsolute,
   [IDS.bws.projectedAbsolute]: IDS.bws.baseline,
   // seasonal variability - baseline / projected
   [IDS.sev.baseline]: IDS.sev.projectedAbsolute,

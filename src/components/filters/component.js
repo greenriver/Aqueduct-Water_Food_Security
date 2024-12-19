@@ -123,7 +123,7 @@ class Filters extends PureComponent {
       }
     } = this.props;
 
-    if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
+    // if (selected && selected.value === 'baseline') this.updateFilters('absolute', 'type');
     if (selected) {
       const { value } = selected;
       this.updateFilters(value, 'year');
@@ -131,15 +131,11 @@ class Filters extends PureComponent {
       if (currentYear === 'baseline' && value !== 'baseline') {
         if (EQUIVALENCE_WATER_INDICATORS[indicator]) {
           this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
-        } else {
-          this.updateFilters(DEFAULT_PROJECTED_WATER_INDICATOR, 'indicator');
         }
       }
       if (currentYear !== 'baseline' && value === 'baseline') {
         if (EQUIVALENCE_WATER_INDICATORS[indicator]) {
           this.updateFilters(EQUIVALENCE_WATER_INDICATORS[indicator], 'indicator');
-        } else {
-          this.updateFilters(DEFAULT_BASELINE_WATER_INDICATOR, 'indicator');
         }
       }
     }
@@ -148,12 +144,7 @@ class Filters extends PureComponent {
   updateFilters(value, field) {
     const { setFilters } = this.props;
     const newFilter = {
-      [field]: value,
-      ...(field === 'scope' && value === 'global') && {
-        iso: null,
-        country: null,
-        countryName: null
-      }
+      [field]: value
     };
 
     setFilters(newFilter);
