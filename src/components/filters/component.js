@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import isNil from 'lodash/isNil';
 import {
-  IRRIGATION_OPTIONS,
   SegmentedUi,
   Accordion,
   Icon,
@@ -25,11 +24,8 @@ import {
   SCOPE_OPTIONS,
   DATA_TYPE_OPTIONS,
 } from 'constants/filters';
-import { CROP_OPTIONS } from 'constants/crops';
 import {
   EQUIVALENCE_WATER_INDICATORS,
-  DEFAULT_BASELINE_WATER_INDICATOR,
-  DEFAULT_PROJECTED_WATER_INDICATOR,
   EQUIVALENCE_WATER_INDICATORS_PROJECTED,
   ID_LOOKUP,
   WATER_INDICATORS,
@@ -53,22 +49,6 @@ class Filters extends PureComponent {
     this.updateFilters = this.updateFilters.bind(this);
   }
 
-  getIndicatorKey(indicator) {
-    const {
-      filters
-    } = this.props;
-
-    const indicatorKey = ID_LOOKUP[indicator || filters.indicator];
-    if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[filters.scope] || []).includes(indicatorKey)) return undefined;
-
-    return indicatorKey;
-  }
-
-  getIndicator(indicator) {
-    const indicatorKey = this.getIndicatorKey(indicator);
-    return indicatorKey ? WATER_INDICATORS[indicatorKey] : undefined;
-  }
-
   onSelectCountryToCompare(selected) {
     const {
       filters: { country },
@@ -76,6 +56,24 @@ class Filters extends PureComponent {
     } = this.props;
 
     router.push(`/compare?countries=${country},${selected.value}`);
+  }
+
+  getIndicator(indicator) {
+    const indicatorKey = this.getIndicatorKey(indicator);
+    return indicatorKey ? WATER_INDICATORS[indicatorKey] : undefined;
+  }
+
+  getIndicatorKey(indicator) {
+    const {
+      filters
+    } = this.props;
+
+    const indicatorKey = ID_LOOKUP[indicator || filters.indicator];
+    if (!(ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE[filters.scope] || []).includes(indicatorKey)) {
+      return undefined;
+    }
+
+    return indicatorKey;
   }
 
   openModal(slug) {
@@ -167,7 +165,7 @@ class Filters extends PureComponent {
       setLayerParametrization,
       resetFilters
     } = this.props;
-    const disablesTimeline = !filters.indicator;
+    const disablesTimeline = !filters.indicator || (filters.indicator === 'none' && filters.food === 'none');
     const componentClass = classnames('c-filters', { [className]: !!className });
     const indicator = this.getIndicator();
 
