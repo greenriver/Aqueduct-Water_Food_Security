@@ -8,6 +8,7 @@ import { getBounds } from 'utils/map';
 // constants
 import { BASELINE_WATER_INDICATORS_IDS, SUPPLY_CHAIN_LAYER_ID, ALLOWED_WATER_INDICATOR_KEYS_BY_SCOPE, ID_LOOKUP, WATER_INDICATORS } from 'constants/water-indicators';
 import { CROP_OPTIONS } from 'constants/crops';
+import capitalize from 'lodash/capitalize';
 import { MAP_OPTIONS, BASEMAPS } from './constants';
 
 // helpers
@@ -141,8 +142,15 @@ export const getActiveLayers = createSelector(
             };
           }
 
-          const getLayerName = () => {
-            if (isWater) return _waterLayerName;
+          const sqlParams = reduceSqlParams(sqlConfig, filters);
+
+          const getLayerName = (sqlP) => {
+            if (isWater) {
+              if (sqlP.where.crop) {
+                return `${_waterLayerName} ${capitalize(sqlP.where.crop)}`;
+              }
+              return _waterLayerName;
+            }
             if (isOneCrop) {
               const crop = CROP_OPTIONS.find(_crop => _crop.value === filters.crop) || {};
               return crop.label;
@@ -155,13 +163,13 @@ export const getActiveLayers = createSelector(
           const layer = {
             ...currentLayer,
             id: currentLayer.id,
-            name: getLayerName(),
+            name: getLayerName(sqlParams),
             country: _filters.country,
             category: layerSpecAttrs.category,
             options: layerSpecAttrs.layerOptions,
             metadata,
             ...paramsConfig && { params: reduceParams(paramsConfig, filters) },
-            ...sqlConfig && { sqlParams: reduceSqlParams(sqlConfig, filters) },
+            ...sqlConfig && { sqlParams },
             ...{ opacity: currentLayer.opacity || _layerParametrization.opacity }
           };
 
